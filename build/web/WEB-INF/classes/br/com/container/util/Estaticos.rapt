@@ -1,0 +1,15 @@
+br/com/container/modelo/Reserva_.java
+br/com/container/modelo/Disciplina_.java
+br/com/container/modelo/Perfil_.java
+br/com/container/modelo/Agenda_.java
+br/com/container/modelo/Planejamento_.java
+br/com/container/modelo/Endereco_.java
+br/com/container/modelo/Atividade_.java
+br/com/container/modelo/Sala_.java
+br/com/container/modelo/Pessoa_.java
+br/com/container/modelo/Usuario_.java
+br/com/container/modelo/Curso_.java
+br/com/container/modelo/Professor_.java
+br/com/container/modelo/Funcao_.java
+br/com/container/modelo/DiaDaSemana_.java
+br/com/container/modelo/Funcionario_.java

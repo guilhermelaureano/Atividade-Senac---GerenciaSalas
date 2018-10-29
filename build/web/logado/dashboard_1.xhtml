@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../logado/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="conteudo">
+
+
+
+        <h:form id="formBtn">
+            <p:panel id="pDashboardCaixa" rendered="#{request.isUserInRole('ROLE_CAIXA') or request.isUserInRole('ROLE_ADMIN') }"> 
+
+                <h1 class="jr-titulo1">Senac</h1>
+                <!--<p:panelGrid columns="1" layout="grid">-->            
+                <p:panelGrid columns="2" layout="grid">            
+                    <p:column>
+                        <div class="info-box">
+                            <span class="info-box-icon bg-green"><i class="fa fa-r fa-money"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Salas</span>                            
+                                <span class="info-box-number">Total 
+                                    <h:outputText value="#{usuarioLogadoC.totalSala} cadastrada(s)"/>
+                                </span>                            
+                            </div>
+                        </div>
+                    </p:column>
+                    <p:column>
+                        <div class="info-box">
+                        </div>
+                    </p:column>
+                </p:panelGrid>
+
+            </p:panel><!-- Fim Caixa -->
+
+            <p:panel id="pDashboardAtendente" >
+
+                <h1 class="jr-titulo1">Dados de cadastro</h1>
+                <p:panelGrid columns="1" layout="grid"> 
+                    <p:column>
+                        <div class="info-box">
+                            <p:commandButton value="Alterar Senha" action="#{usuarioLogadoC.chamaEdicaoPerfil}" styleClass="btn-r btn-block-r btn-warning-r btn-lg-r" ajax="false"></p:commandButton>                            
+                        </div>
+                    </p:column>
+                </p:panelGrid>
+            </p:panel><!-- Fim Atendente -->
+            
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

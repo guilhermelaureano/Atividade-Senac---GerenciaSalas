@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../logado/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="conteudo">
+
+        <h1 class="jr-titulo1">Atividades</h1>
+        <h:form id="form_pesquisa">
+            <!--mostra a toolbar se mostra_toolbar == true-->
+            <p:toolbar styleClass="toolbar" rendered="#{!processoC.mostra_toolbar}"  >
+                <p:toolbarGroup  >
+                    <p:commandButton value="Pesquisar" disabled="true" />
+                    <p:separator></p:separator>
+                    <p:commandButton value="Novo" actionListener="#{processoC.novo}" update="@form" global="false"  />
+                </p:toolbarGroup>
+            </p:toolbar>
+            <!--mostra a toolbar se mostra_toolbar == false-->
+            <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" rendered="#{processoC.mostra_toolbar}">
+
+                <p:toolbarGroup  >
+                    <p:commandButton value="Salvar" action="#{processoC.salvar()}" update="panelGrop" />
+                    <p:separator></p:separator>
+                    <p:commandButton value="Cancelar" actionListener="#{processoC.novaPesquisa}" immediate="true"
+                                     update="@form" global="false" />
+                </p:toolbarGroup>
+
+            </p:toolbar>
+            <p:messages id="mens"  autoUpdate="true" />
+            <h:panelGroup id="aba1" rendered="#{!processoC.mostra_toolbar}" >
+
+                <!--inicio da tela de pesquisa-->
+                <p:panelGrid id="panel1" columns="3" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-2, 
+                             ui-grid-col-4" styleClass="painel_grid_noborder" style="margin-top:7px" >
+
+                    <p:outputLabel  value="Total" />
+                    <p:outputLabel  value="#{processoC.planejamento.atividades.size()}" />
+                    <p:outputLabel  value="#{processoC.planejamento.nome}" />                    
+
+                </p:panelGrid>
+
+                <p:panelGrid  columns="1" layout="grid" style="margin-top:7px" >
+                    <p:outputLabel  value="Realizado" />
+                    <p:progressBar value="#{processoC.porcentagem}" labelTemplate="{value}%" displayOnly="true"/>
+                </p:panelGrid>
+
+                <p:dataTable id="dadosTabela" value="#{processoC.modelAtividades}" var="atividade" reflow="true" paginator="true"
+                             style="margin-top: 20px;"  emptyMessage="Nenhuma função encontrado" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
+                             rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{atividade.nome}" />
+                    </p:column>
+                    <p:column headerText="Entrega">
+                        <h:outputText value="#{atividade.dt_prazoFinal}"   >
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="pt-BR" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Inicio">
+                        <h:outputText value="#{atividade.dt_inicio}" rendered="#{atividade.dt_inicio != null} "  >
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="pt-BR" />
+                        </h:outputText>
+                        <h:outputText value="Não inicializado" rendered="#{atividade.dt_entrega == null}" />
+                        <h:outputText value="#{atividade.dt_entrega}" rendered="#{atividade.dt_entrega != null}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy" locale="pt-BR" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Finalizado">
+                        <h:outputText value="Não realizado" rendered="#{atividade.dt_entrega == null}" />
+                        <h:outputText value="Finalizado" rendered="#{atividade.dt_entrega != null}" />
+                    </p:column>
+                    <p:column headerText="Observação">
+                        <h:outputText value="#{atividade.observacao}" />
+                    </p:column>
+
+                    <p:column headerText="Ação"   >
+                        <p:commandButton icon="ui-icon-circle-zoomout" title="Visualizar"
+                                         process="@this" update="@form" actionListener="#{processoC.alterarProcesso()}">
+                            <f:setPropertyActionListener target="#{processoC.atividade}" value="#{atividade}"   />          
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-circle-check" actionListener="#{processoC.finalizar()}"
+                                         update="dadosTabela" title="Finalizar" disabled="#{atividade.dt_entrega != null}">
+                            <p:confirm header="Confirmação" message="Tem certeza que deseja finalizar?" 
+                                       icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{processoC.atividade}" value="#{atividade}"   />   
+                        </p:commandButton>
+                    </p:column>
+
+
+                </p:dataTable>
+
+            </h:panelGroup>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
+                                 icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
+                                 icon="ui-icon-close" />
+            </p:confirmDialog>
+
+            <h:panelGroup id="panelGrop" rendered="#{processoC.mostra_toolbar}" >
+                <p:panelGrid id="panelGridPesq" columns="3" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4, 
+                             ui-grid-col-4" styleClass="painel_grid_noborder" style="margin-top:7px" >
+                    <p:outputLabel  value="ATIVIDADES" />  
+                </p:panelGrid>
+                <p:panelGrid  columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-6, 
+                              ui-grid-col-4" styleClass="painel_grid_noborder" style="margin-top:7px" >
+                    <p:outputLabel  value="Nome" />  
+                    <p:inputText id="nome" value="#{processoC.atividade.nome}" required="true" style="width: 100%" />  
+                    <p:outputLabel  value="Descrição" />  
+                    <p:inputTextarea id="descricao" value="#{processoC.atividade.descricao}" required="true"  style="width: 100%" /> 
+                    <p:outputLabel  value="Prazo" />  
+                    <p:calendar id="prazo" value="#{processoC.atividade.dt_prazoFinal}" required="true"  />  
+                    <p:outputLabel  value="Iniciado" />  
+                    <p:calendar id="iniciado" value="#{processoC.atividade.dt_inicio}"   />  
+                    <p:outputLabel  value="Finalizado" />  
+                    <p:calendar id="finalizado" value="#{processoC.atividade.dt_entrega}"  /> 
+                    <p:outputLabel  value="Observação" />  
+                    <p:inputTextarea id="observacao" value="#{processoC.atividade.observacao}"  style="width: 100%"/> 
+                    
+                </p:panelGrid>
+
+            </h:panelGroup>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
