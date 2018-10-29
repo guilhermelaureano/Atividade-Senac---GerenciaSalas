@@ -9,7 +9,7 @@
 
     <ui:define name="conteudo">
         <h1 class="jr-titulo1">Professor</h1>
-        
+
 
         <h:form id="form_pesquisa">
 
@@ -90,42 +90,51 @@
             </p:confirmDialog>
 
             <h:panelGroup id="aba_alterar" rendered="#{profC.mostraToolbar}">
-                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
-                             styleClass="painel_grid_noborder" >
-                    <p:outputLabel for="nome" value="Nome :" />
-                    <p:inputText id="nome" value="#{profC.prof.nome}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
+                <p:separator />
+                <p:panel header="Dados Pessoais"> 
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
+                                 styleClass="painel_grid_noborder" >
+                        <p:outputLabel for="nome" value="Nome :" />
+                        <p:inputText id="nome" value="#{profC.prof.nome}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
 
-                    <p:outputLabel for="foneMovel" value="Fone Móvel" />
-                    <p:inputMask  id="foneMovel" value="#{profC.prof.foneMovel}" required="true" mask="(99) 99999-9999" style="width: 100%; max-width: 600px;"/>
-                    <p:outputLabel for="btWhats" value="Móvel tem Whatsapp"/>
-                    <p:selectBooleanButton id="btWhats" value="#{profC.prof.whatsapp}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                        <p:outputLabel for="foneMovel" value="Fone Móvel" />
+                        <p:inputMask  id="foneMovel" value="#{profC.prof.foneMovel}" required="true" mask="(99) 99999-9999" style="width: 100%; max-width: 600px;"/>
+                        <p:outputLabel for="btWhats" value="Móvel tem Whatsapp"/>
+                        <p:selectBooleanButton id="btWhats" value="#{profC.prof.whatsapp}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
 
-                    <p:outputLabel for="foneFixo" value="Fone fixo:" />
-                    <p:inputMask id="foneFixo" value="#{profC.prof.foneFixo}" required="false" mask="(99) 99999-9999" style="width: 100%; max-width: 600px;"/>
+                        <p:outputLabel for="foneFixo" value="Fone fixo:" />
+                        <p:inputMask id="foneFixo" value="#{profC.prof.foneFixo}" required="false" mask="(99) 99999-9999" style="width: 100%; max-width: 600px;"/>
 
-                    <p:outputLabel for="email" value="Email:" />
-                    <p:inputText id="email" value="#{profC.prof.email}" style="width: 100%; max-width: 600px;"/>
+                        <p:outputLabel for="email" value="Email:" />
+                        <p:inputText id="email" value="#{profC.prof.email}" style="width: 100%; max-width: 600px;"/>
 
-                    <p:outputLabel for="rua" value="Rua:" />
-                    <p:inputText id="rua" value="#{profC.endereco.logradouro}" style="width: 100%; max-width: 600px;"/>
-                    
-                    <p:outputLabel for="numero" value="Numero:" />
-                    <p:inputText id="numero" value="#{profC.endereco.numero}" style="width: 100%; max-width: 600px;"/>
-                    
-                    <p:outputLabel for="bairro" value="Bairro:" />
-                    <p:inputText id="bairro" value="#{profC.endereco.bairro}" style="width: 100%; max-width: 600px;"/>
-                    
-                    <p:outputLabel for="cidade" value="Cidade:" />
-                    <p:inputText id="cidade" value="#{profC.endereco.cidade}" style="width: 100%; max-width: 600px;"/>
-                    
-                    <p:outputLabel for="complemento" value="Complemento" />
-                    <p:inputText id="complemento" value="#{profC.endereco.complemento}" style="width: 100%; max-width: 600px;"/>
-                    
-                    <p:outputLabel for="obs" value="Observação:" />
-                    <p:inputText id="obs" value="#{profC.endereco.observacao}" style="width: 100%; max-width: 600px;"/>
+                        <p:commandButton id="btAddDisc" value="Adicionar Disciplina" actionListener="#{profC.adicionarDisciplina()}" update="@form" />
+                    </p:panelGrid>
+                </p:panel>
+                
+                <p:panel header="Endereço" >
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
+                                 styleClass="painel_grid_noborder" >
+                        <p:outputLabel for="logradouro" value="Logradouro:" />
+                        <p:inputText id="logradouro" value="#{profC.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="numero" value="Número:" />
+                        <p:inputText id="numero" value="#{profC.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="bairro" value="Bairro:" />
+                        <p:inputText id="bairro" value="#{profC.endereco.bairro}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="cidade" value="Cidade:" />
+                        <p:inputText id="cidade" value="#{profC.endereco.cidade}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="complemento" value="Complemento:" />
+                        <p:inputText id="complemento" value="#{profC.endereco.complemento}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="obs" value="Observação:" />
+                        <p:inputText id="obs" value="#{profC.endereco.observacao}" required="true" style="width: 100%; max-width: 600px;"/>
+                    </p:panelGrid>
+                </p:panel>
 
-                    <p:commandButton id="btAddDisc" value="Adicionar Disciplina" actionListener="#{profC.adicionarDisciplina()}" update="@form" />
-                </p:panelGrid>
                 <p:panelGrid id="painelDisciplinas" columns="1" layout="grid" styleClass="painel_grid_noborder" >
                     <ui:repeat value="#{profC.disciplinas}" var="disciplina" varStatus="status">
                         <p:panelGrid columns="3" layout="grid" styleClass="painel_grid_noborder" >

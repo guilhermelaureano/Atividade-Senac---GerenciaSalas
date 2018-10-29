@@ -88,25 +88,61 @@
 
             <!--inicio da tela de cadastro (salvar e alterar)-->
             <h:panelGroup id="panelGrop" rendered="#{funcionarioC.mostra_toolbar}" >
-                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
-                             styleClass="painel_grid_noborder" >
+                <p:separator />
+                <p:panel header="Dados Pessoais">
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
+                                 styleClass="painel_grid_noborder" >
 
 
-                    <p:outputLabel for="nome" value="Nome :" />
-                    <p:inputText id="nome" value="#{funcionarioC.funcionario.nome}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:outputLabel for="nome" value="Nome :" />
+                        <p:inputText id="nome" value="#{funcionarioC.funcionario.nome}" required="true" style="width: 100%; max-width: 600px;"/>
 
-                    <p:outputLabel for="email" value="E-mail :" />
-                    <p:inputText id="email" value="#{funcionarioC.funcionario.email}" type="email"
-                                 required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:outputLabel for="email" value="E-mail :" />
+                        <p:inputText id="email" value="#{funcionarioC.funcionario.email}" type="email" required="true" style="width: 100%; max-width: 600px;"/>
 
-                    <h:outputLabel for="funcao" value="Função " />
-                    <p:selectOneMenu styleClass="form-control" id="perfil" value="#{funcionarioC.funcao.id}" style="width: 90%; max-width: 580px;" required="true" 
-                                     requiredMessage="Campo função é obrigatório"  >
-                        <f:selectItem itemLabel="Selecione uma Função" itemValue="" />
-                        <f:selectItems value="#{funcionarioC.funcoes}" />
-                    </p:selectOneMenu>
+                        <p:outputLabel for="foneFixo" value="Telefone Fixo :" />
+                        <p:inputText id="foneFixo" value="#{funcionarioC.funcionario.foneFixo}" required="true" style="width: 100%; max-width: 600px;"/>
 
-                </p:panelGrid>
+                        <p:outputLabel for="foneMovel" value="Telefone Celular:" />
+                        <p:inputText id="foneMovel" value="#{funcionarioC.funcionario.foneMovel}" required="true" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="whats" value="Móvel tem Whatsapp"/>
+                        <p:selectBooleanButton id="whats" value="#{funcionarioC.funcionario.whatsapp}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+
+                        <h:outputLabel for="funcao" value="Função " />
+                        <p:selectOneMenu styleClass="form-control" id="perfil" value="#{funcionarioC.funcao.id}" style="width: 90%; max-width: 580px;" required="true" 
+                                         requiredMessage="Campo função é obrigatório"  >
+                            <f:selectItem itemLabel="Selecione uma Função" itemValue="" />
+                            <f:selectItems value="#{funcionarioC.funcoes}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </p:panel>
+                <p:separator />
+                <p:panel header="Endereço" >
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
+                                 styleClass="painel_grid_noborder" >
+                        <p:outputLabel for="logradouro" value="Logradouro:" />
+                        <p:inputText id="logradouro" value="#{funcionarioC.funcionario.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="numero" value="Número:" />
+                        <p:inputText id="numero" value="#{funcionarioC.funcionario.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="bairro" value="Bairro:" />
+                        <p:inputText id="bairro" value="#{funcionarioC.funcionario.endereco.bairro}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="cidade" value="Cidade:" />
+                        <p:inputText id="cidade" value="#{funcionarioC.funcionario.endereco.cidade}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="complemento" value="Complemento:" />
+                        <p:inputText id="complemento" value="#{funcionarioC.funcionario.endereco.complemento}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        <p:outputLabel for="obs" value="Observação:" />
+                        <p:inputText id="obs" value="#{funcionarioC.funcionario.endereco.observacao}" required="true" style="width: 100%; max-width: 600px;"/>
+                        
+                        
+                    </p:panelGrid>
+                </p:panel>
+
             </h:panelGroup>
             <!--fim da tela de cadastro-->
 
