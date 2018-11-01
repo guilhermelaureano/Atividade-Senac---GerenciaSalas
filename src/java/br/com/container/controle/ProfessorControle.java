@@ -33,10 +33,8 @@ public class ProfessorControle implements Serializable {
     private boolean pesquisaPorDisciplina = false;
     private String pesqNome = "";
     private String pesqDisciplina = "";
-
     private Session session;
     private ProfessorDao dao;
-
     private Professor prof;
     private List<Professor> profs;
     private DataModel<Professor> modelProfs;

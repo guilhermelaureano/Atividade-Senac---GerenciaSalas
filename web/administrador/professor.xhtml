@@ -103,12 +103,11 @@
                         <p:selectBooleanButton id="btWhats" value="#{profC.prof.whatsapp}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
 
                         <p:outputLabel for="foneFixo" value="Fone fixo:" />
-                        <p:inputMask id="foneFixo" value="#{profC.prof.foneFixo}" required="false" mask="(99) 99999-9999" style="width: 100%; max-width: 600px;"/>
+                        <p:inputMask id="foneFixo" value="#{profC.prof.foneFixo}" required="false" mask="(99) 9999-9999" style="width: 100%; max-width: 600px;"/>
 
                         <p:outputLabel for="email" value="Email:" />
                         <p:inputText id="email" value="#{profC.prof.email}" style="width: 100%; max-width: 600px;"/>
 
-                        <p:commandButton id="btAddDisc" value="Adicionar Disciplina" actionListener="#{profC.adicionarDisciplina()}" update="@form" />
                     </p:panelGrid>
                 </p:panel>
                 
@@ -132,6 +131,10 @@
                         
                         <p:outputLabel for="obs" value="Observação:" />
                         <p:inputText id="obs" value="#{profC.endereco.observacao}" required="true" style="width: 100%; max-width: 600px;"/>
+                    </p:panelGrid>
+                    <p:separator />
+                    <p:panelGrid>
+                        <p:commandButton id="btAddDisc" value="Adicionar Disciplina" actionListener="#{profC.adicionarDisciplina()}" update="@form" />
                     </p:panelGrid>
                 </p:panel>
 

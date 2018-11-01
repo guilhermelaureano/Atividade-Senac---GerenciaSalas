@@ -5,6 +5,7 @@ import br.com.container.dao.FuncaoDaoImpl;
 import br.com.container.dao.FuncionarioDao;
 import br.com.container.dao.FuncionarioDaoImpl;
 import br.com.container.dao.HibernateUtil;
+import br.com.container.modelo.Endereco;
 import br.com.container.modelo.Funcao;
 import br.com.container.modelo.Funcionario;
 import java.io.Serializable;
@@ -35,6 +36,7 @@ public class FuncionarioControle implements Serializable {
     private List<Funcionario> funcionarios;
     private List<SelectItem> funcoes;
     private boolean mostra_toolbar;
+    private Endereco endereco;
 
     @PostConstruct
     public void constroiTudo() {
@@ -82,7 +84,6 @@ public class FuncionarioControle implements Serializable {
     }
 
     //metodos getts e setts
-
     public void carregarParaAlterar() {
         mostra_toolbar = !mostra_toolbar;
         funcionario = modelFuncionarios.getRowData();
@@ -190,6 +191,18 @@ public class FuncionarioControle implements Serializable {
 
     public void setFuncoes(List<SelectItem> funcoes) {
         this.funcoes = funcoes;
+    }
+
+    public Endereco getEndereco() {
+        if(endereco == null){
+            endereco = new Endereco();
+        }
+        
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public boolean isMostra_toolbar() {

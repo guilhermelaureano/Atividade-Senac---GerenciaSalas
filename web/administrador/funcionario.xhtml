@@ -33,7 +33,6 @@
 
                 <p:toolbarGroup align="right">
 
-
                 </p:toolbarGroup>
 
             </p:toolbar>
@@ -101,10 +100,10 @@
                         <p:inputText id="email" value="#{funcionarioC.funcionario.email}" type="email" required="true" style="width: 100%; max-width: 600px;"/>
 
                         <p:outputLabel for="foneFixo" value="Telefone Fixo :" />
-                        <p:inputText id="foneFixo" value="#{funcionarioC.funcionario.foneFixo}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:inputMask id="foneFixo" value="#{funcionarioC.funcionario.foneFixo}" mask="(99) 9999-9999" required="true" style="width: 100%; max-width: 600px;"/>
 
                         <p:outputLabel for="foneMovel" value="Telefone Celular:" />
-                        <p:inputText id="foneMovel" value="#{funcionarioC.funcionario.foneMovel}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:inputMask id="foneMovel" value="#{funcionarioC.funcionario.foneMovel}"  mask="(99) 99999-9999" required="true" style="width: 100%; max-width: 600px;"/>
 
                         <p:outputLabel for="whats" value="Móvel tem Whatsapp"/>
                         <p:selectBooleanButton id="whats" value="#{funcionarioC.funcionario.whatsapp}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
