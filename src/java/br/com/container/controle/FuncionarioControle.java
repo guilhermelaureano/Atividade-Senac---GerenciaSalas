@@ -110,13 +110,12 @@ public class FuncionarioControle implements Serializable {
     public void salvar() {
         funcionario.setFuncao(funcao);
         funcionarioDao = new FuncionarioDaoImpl();
-        abreSessao();
         try {
-
+            abreSessao();
+            funcionario.setEndereco(endereco);
+            endereco.setPessoa(funcionario);
             funcionarioDao.salvarOuAlterar(funcionario, sessao);
             Mensagem.salvar("Funcionário " + funcionario.getNome());
-            funcionario = null;
-            funcao = null;
 
         } catch (HibernateException e) {
             boolean isLoginDuplicado = e.getCause().getMessage().contains("'email_UNIQUE'");
@@ -194,10 +193,10 @@ public class FuncionarioControle implements Serializable {
     }
 
     public Endereco getEndereco() {
-        if(endereco == null){
+        if (endereco == null) {
             endereco = new Endereco();
         }
-        
+
         return endereco;
     }
 
