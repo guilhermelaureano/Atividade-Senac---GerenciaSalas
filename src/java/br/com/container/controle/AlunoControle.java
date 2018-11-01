@@ -30,7 +30,6 @@ public class AlunoControle implements Serializable{
     
     private boolean mostraToolbar = false;
     private AlunoDao alunoDao;
-    private Session sessao;
     private String pesqNome = "";
     private Session session;
     private AlunoDao dao;
@@ -89,22 +88,19 @@ public class AlunoControle implements Serializable{
 
     public void salvar() {
         alunoDao = new AlunoDaoImpl();
-        abreSessao();
         try {
-            alunoDao.salvarOuAlterar(aluno, sessao);
+            abreSessao();
+            aluno.setEndereco(endereco);
+            endereco.setPessoa(aluno);
+            alunoDao.salvarOuAlterar(aluno, session);
             Mensagem.salvar("Aluno " + aluno.getNome());
-            aluno = null;
         } catch (HibernateException e) {
-            boolean isLoginDuplicado = e.getCause().getMessage().contains("'email_UNIQUE'");
-            if (isLoginDuplicado) {
-                Mensagem.campoExiste("E-mail");
-            }
             System.out.println("Erro ao salvar aluno " + e.getMessage());
         } catch (Exception e) {
             System.out.println("Erro no salvar alunoDao Controle "
                     + e.getMessage());
         } finally {
-            sessao.close();
+            session.close();
         }
     }
 
