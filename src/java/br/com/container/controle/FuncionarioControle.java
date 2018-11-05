@@ -71,7 +71,7 @@ public class FuncionarioControle implements Serializable {
             funcionarios = funcionarioDao.pesquisaPorNome(funcionario.getNome(), sessao);
             modelFuncionarios = new ListDataModel(funcionarios);
             funcionario.setNome(null);
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             System.out.println("erro ao pesquisar funcionario por nome: " + e.getMessage());
         } finally {
             sessao.close();
@@ -100,7 +100,7 @@ public class FuncionarioControle implements Serializable {
             modelFuncionarios = new ListDataModel(funcionarios);
             Mensagem.excluir("Funcionário");
             limpar();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             System.out.println("erro ao excluir: " + e.getMessage());
         } finally {
             sessao.close();

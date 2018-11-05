@@ -42,15 +42,12 @@ public class AlunoControle implements Serializable{
         if(endereco == null){
             endereco = new Endereco();
         }
-        
         return endereco;
     }
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-
-    
     
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
@@ -70,13 +67,11 @@ public class AlunoControle implements Serializable{
         dao = new AlunoDaoImpl();
         try {
             abreSessao();
-
             if (!pesqNome.equals("")) {
                 alunos = dao.pesquisaPorNome(pesqNome, session);
             } else {
                 alunos = dao.listaTodos(session);
             }
-
             modelAlunos = new ListDataModel(alunos);
             pesqNome = null;
         } catch (HibernateException ex) {
@@ -107,6 +102,7 @@ public class AlunoControle implements Serializable{
     public void alterarAluno() {
         mostraToolbar = !mostraToolbar;
         aluno = modelAlunos.getRowData();
+        aluno.getEndereco();
     }
 
 

@@ -48,25 +48,25 @@
                              currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
                              rowsPerPageTemplate="5,10,15">
                     <p:column headerText="Nome">
-                        <h:outputText value="#{alunoC.aluno.nome}" />
+                        <h:outputText value="#{aluno.nome}" />
                     </p:column>
                     <p:column headerText="CPF">
-                        <h:outputText value="#{alunoC.aluno.CPF}" />
+                        <h:outputText value="#{aluno.CPF}" />
                     </p:column>
                     <p:column headerText="Email">
-                        <h:outputText value="#{alunoC.aluno.email}" />
+                        <h:outputText value="#{aluno.email}" />
                     </p:column>
                     <p:column headerText="Fone">
-                        <h:outputText value="#{alunoC.aluno.foneMovel}" />
+                        <h:outputText value="#{aluno.foneMovel}" />
                     </p:column>
                     <p:column headerText="Whatsapp">
-                        <p:selectBooleanButton value="#{alunoC.aluno.whatsapp}" disabled="true" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                        <p:selectBooleanButton value="#{aluno.whatsapp}" disabled="true" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
                     </p:column>
 
 
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
-                                         process="@this" update="@form" actionListener="#{alunoC.alterarAluno()}">
+                                         process="@this" update="@form" actionListener="#{alunoC.alterarAluno}">
                             <f:setPropertyActionListener target="#{alunoC.aluno}" value="#{aluno}"/>          
                         </p:commandButton>
 

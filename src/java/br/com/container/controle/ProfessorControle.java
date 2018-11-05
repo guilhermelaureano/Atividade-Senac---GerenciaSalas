@@ -118,6 +118,7 @@ public class ProfessorControle implements Serializable {
     public void alterarProf() {
         mostraToolbar = !mostraToolbar;
         prof = modelProfs.getRowData();
+        prof.getEndereco();
         parseDisciplinas(prof.getDisciplinas());
     }
 

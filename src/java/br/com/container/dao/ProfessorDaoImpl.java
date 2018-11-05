@@ -42,6 +42,11 @@ public class ProfessorDaoImpl extends BaseDaoImpl<Professor, Long> implements Pr
     }
 
     @Override
+    public List<Professor> pesqPorBairro(String bairro, Session session) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
     public List<Professor> pesqPorNomeEDisciplina(String nome, String disciplina, Session session) throws HibernateException {
         Query consulta = session.createQuery("from Professor p where p.nome like :nome and p.disciplinas like :disciplinas");
         consulta.setParameter("nome", "%" + nome + "%");
