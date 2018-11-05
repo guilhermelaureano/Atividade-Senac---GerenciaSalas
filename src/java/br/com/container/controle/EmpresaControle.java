@@ -49,8 +49,6 @@ public class EmpresaControle implements Serializable {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-
-    
     
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
@@ -85,145 +83,93 @@ public class EmpresaControle implements Serializable {
             session.close();
         }
     }
-//
-//    public void salvar() {
-//        dao = new EmpresaDaoImpl();
-//        try {
-//            abreSessao();
-//            prof.setEndereco(endereco);
-//            endereco.setPessoa(prof);
-//            dao.salvarOuAlterar(prof, session);
-//            Mensagem.salvar("Professor " + prof.getNome());
-//        } catch (Exception ex) {
-//            Mensagem.mensagemError("Erro ao salvar\nTente novamente");
-//            System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
-//        } finally {
-//            prof = new Professor();
-//            prof.setWhatsapp(true);
-//            disciplinas = new ArrayList();
-//            session.close();
-//        }
-//    }
-//
-//    public void alterarProf() {
-//        mostraToolbar = !mostraToolbar;
-//        prof = modelProfs.getRowData();
-//        parseDisciplinas(prof.getDisciplinas());
-//    }
-//
-//    private String parseDisciplinas() {
-//        StringBuilder builder = new StringBuilder();
-//        builder.append(";");
-//        for (String disciplina : disciplinas) {
-//            if (disciplina.equals("")) {
-//                continue;
-//            }
-//            builder.append(disciplina);
-//            builder.append(";");
-//        }
-//        return builder.toString();
-//    }
-//
-//    private void parseDisciplinas(String disciplinas) {
-//        this.disciplinas = new ArrayList(Arrays.asList(disciplinas.split(";")));
-//        this.disciplinas.remove(0);
-//    }
-//
-//    public void adicionarDisciplina() {
-//        disciplinas.add("");
-//    }
-//
-//    public void removerDisciplina(int index) {
-//        disciplinas.remove(index);
-//    }
-//
-//    public void excluir() {
-//        prof = modelProfs.getRowData();
-//        dao = new ProfessorDaoImpl();
-//        try {
-//            abreSessao();
-//            dao.remover(prof, session);
-//            Mensagem.excluir("Professor " + prof.getNome());
-//            prof = new Professor();
-//        } catch (Exception ex) {
-//            System.err.println("Erro ao excluir professor:\n" + ex.getMessage());
-//        } finally {
-//            session.close();
-//        }
-//    }
-//
-//    //Getters e Setters
-//    public boolean isMostraToolbar() {
-//        return mostraToolbar;
-//    }
-//
-//    public void setMostraToolbar(boolean mostraToolbar) {
-//        this.mostraToolbar = mostraToolbar;
-//    }
-//
-//    public boolean isPesquisaPorDisciplina() {
-//        return pesquisaPorDisciplina;
-//    }
-//
-//    public void setPesquisaPorDisciplina(boolean pesquisaPorDisciplina) {
-//        this.pesquisaPorDisciplina = pesquisaPorDisciplina;
-//    }
-//
-//    public String getPesqNome() {
-//        return pesqNome;
-//    }
-//
-//    public void setPesqNome(String pesqNome) {
-//        this.pesqNome = pesqNome;
-//    }
 
-//    public String getPesqDisciplina() {
-//        return pesqDisciplina;
-//    }
-//
-//    public void setPesqDisciplina(String pesqDisciplina) {
-//        this.pesqDisciplina = pesqDisciplina;
-//    }
-//
-//    public Professor getProf() {
-//        if (prof == null) {
-//            prof = new Professor();
-//            prof.setWhatsapp(true);
-//        }
-//        return prof;
-//    }
-//
-//    public void setProf(Professor prof) {
-//        this.prof = prof;
-//    }
-//
-//    public List<Professor> getProfs() {
-//        if (profs == null) {
-//            profs = new ArrayList();
-//        }
-//        return profs;
-//    }
-//
-//    public void setProfs(List<Professor> profs) {
-//        this.profs = profs;
-//    }
-//
-//    public DataModel<Professor> getModelProfs() {
-//        return modelProfs;
-//    }
-//
-//    public void setModelProfs(DataModel<Professor> modelProfs) {
-//        this.modelProfs = modelProfs;
-//    }
-//
-//    public List<String> getDisciplinas() {
-//        if (disciplinas == null) {
-//            disciplinas = new ArrayList();
-//        }
-//        return disciplinas;
-//    }
-//
-//    public void setDisciplinas(List<String> disciplinas) {
-//        this.disciplinas = disciplinas;
-//    }
+    public void salvar() {
+        dao = new EmpresaDaoImpl();
+        try {
+            abreSessao();
+            empresa.setEndereco(endereco);
+            endereco.setEmpresa(empresa);
+            dao.salvarOuAlterar(empresa, session);
+            Mensagem.salvar("Empresa " + empresa.getNome());
+        } catch (Exception ex) {
+            Mensagem.mensagemError("Erro ao salvar\nTente novamente");
+            System.err.println("Erro pesquisa empresa:\n" + ex.getMessage());
+        } finally {
+            empresa = new Empresa();
+            session.close();
+        }
+    }
+
+    public void alterarEmpresa() {
+        mostraToolbar = !mostraToolbar;
+        empresa = modelEmpresas.getRowData();
+    }
+
+
+
+    public void excluir() {
+        empresa = modelEmpresas.getRowData();
+        dao = new EmpresaDaoImpl();
+        try {
+            abreSessao();
+            dao.remover(empresa, session);
+            Mensagem.excluir("Empresa " + empresa.getNome());
+            empresa = new Empresa();
+        } catch (Exception ex) {
+            System.err.println("Erro ao excluir Empresa:\n" + ex.getMessage());
+        } finally {
+            session.close();
+        }
+    }
+
+    //Getters e Setters
+    public boolean isMostraToolbar() {
+        return mostraToolbar;
+    }
+
+    public void setMostraToolbar(boolean mostraToolbar) {
+        this.mostraToolbar = mostraToolbar;
+    }
+
+
+    public String getPesqNome() {
+        return pesqNome;
+    }
+
+    public void setPesqNome(String pesqNome) {
+        this.pesqNome = pesqNome;
+    }
+
+
+    public Empresa getEmpresa() {
+        if (empresa == null) {
+            empresa = new Empresa();
+        }
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public List<Empresa> getEmpresas() {
+        if (empresas == null) {
+            empresas = new ArrayList();
+        }
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
+    }
+
+    public DataModel<Empresa> getModelEmpresas() {
+        return modelEmpresas;
+    }
+
+    public void setModelEmpresas(DataModel<Empresa> modelEmpresas) {
+        this.modelEmpresas = modelEmpresas;
+    }
+
 }

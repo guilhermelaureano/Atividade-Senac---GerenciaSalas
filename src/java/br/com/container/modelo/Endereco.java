@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -34,11 +33,28 @@ public class Endereco implements Serializable {
     private String cidade;
     private String complemento;
     private String observacao;
-
+    
+    @OneToOne
+    @JoinColumn(name = "idEmpresa")
+    private Empresa empresa;
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idPessoa")
     private Pessoa pessoa;
 
+    public Endereco(String logradouro, String numero, String bairro, String cidade, String complemento, String observacao) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.complemento = complemento;
+        this.observacao = observacao;
+    }
+
+    public Endereco() {
+    }
+
+    
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -102,6 +118,15 @@ public class Endereco implements Serializable {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+    
 
     @Override
     public int hashCode() {

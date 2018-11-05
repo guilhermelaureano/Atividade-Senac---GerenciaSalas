@@ -16,6 +16,7 @@ public abstract class Endereco_ {
 	public static volatile SingularAttribute<Endereco, String> logradouro;
 	public static volatile SingularAttribute<Endereco, String> bairro;
 	public static volatile SingularAttribute<Endereco, Long> id;
+	public static volatile SingularAttribute<Endereco, Empresa> empresa;
 
 }
 
