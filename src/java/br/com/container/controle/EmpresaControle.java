@@ -29,8 +29,6 @@ import org.hibernate.Session;
 public class EmpresaControle implements Serializable {
 
     private boolean mostraToolbar = false;
-    private boolean pesquisaPorDisciplina = false;
-    private String pesqNome = "";
     private Session session;
     private EmpresaDao dao;
     private Empresa empresa;
@@ -38,18 +36,6 @@ public class EmpresaControle implements Serializable {
     private DataModel<Empresa> modelEmpresas;
     private Endereco endereco;
 
-    public Endereco getEndereco() {
-        if(endereco == null){
-            endereco = new Endereco();
-        }
-        
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-    
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
             session = HibernateUtil.abreSessao();
@@ -59,7 +45,7 @@ public class EmpresaControle implements Serializable {
     public void mudaToolbar() {
         empresa = new Empresa();
         empresas = new ArrayList();
-        pesqNome = "";
+        empresa.setNome(null);
         mostraToolbar = !mostraToolbar;
     }
 
@@ -67,18 +53,15 @@ public class EmpresaControle implements Serializable {
         dao = new EmpresaDaoImpl();
         try {
             abreSessao();
-
-            if (!pesqNome.equals("")) {
-            } else if (!pesqNome.equals("")) {
-                empresas = dao.pesquisaPorNome(pesqNome, session);
+            if (!empresa.getNome().equals("")) {
+                empresas = dao.pesquisaPorNome(empresa.getNome(), session);
             } else {
                 empresas = dao.listaTodos(session);
             }
-
             modelEmpresas = new ListDataModel(empresas);
-            pesqNome = null;
+            empresa.setNome(null);
         } catch (HibernateException ex) {
-            System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
+            System.err.println("Erro pesquisa empresa:\n" + ex.getMessage());
         } finally {
             session.close();
         }
@@ -104,9 +87,8 @@ public class EmpresaControle implements Serializable {
     public void alterarEmpresa() {
         mostraToolbar = !mostraToolbar;
         empresa = modelEmpresas.getRowData();
+        empresa.getEndereco();
     }
-
-
 
     public void excluir() {
         empresa = modelEmpresas.getRowData();
@@ -131,16 +113,6 @@ public class EmpresaControle implements Serializable {
     public void setMostraToolbar(boolean mostraToolbar) {
         this.mostraToolbar = mostraToolbar;
     }
-
-
-    public String getPesqNome() {
-        return pesqNome;
-    }
-
-    public void setPesqNome(String pesqNome) {
-        this.pesqNome = pesqNome;
-    }
-
 
     public Empresa getEmpresa() {
         if (empresa == null) {
@@ -172,4 +144,15 @@ public class EmpresaControle implements Serializable {
         this.modelEmpresas = modelEmpresas;
     }
 
+    public Endereco getEndereco() {
+        if (endereco == null) {
+            endereco = new Endereco();
+        }
+
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 }
