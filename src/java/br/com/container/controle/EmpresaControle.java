@@ -28,7 +28,7 @@ import org.hibernate.Session;
 @ViewScoped
 public class EmpresaControle implements Serializable {
 
-    private boolean mostraToolbar = false;
+    private boolean mostraToolbar;
     private Session session;
     private EmpresaDao dao;
     private Empresa empresa;
@@ -87,7 +87,7 @@ public class EmpresaControle implements Serializable {
     public void alterarEmpresa() {
         mostraToolbar = !mostraToolbar;
         empresa = modelEmpresas.getRowData();
-        empresa.getEndereco();
+        endereco = empresa.getEndereco();
     }
 
     public void excluir() {
