@@ -42,27 +42,27 @@
 
                 </p:panelGrid>
 
-                <p:dataTable id="dadosProf" value="#{empresaC.modelEmpresas}" var="empresa" reflow="true" paginator="true"
+                <p:dataTable id="dadosEmpresa" value="#{empresaC.modelEmpresas}" var="empresa" reflow="true" paginator="true"
                              style="margin-top: 20px;"  emptyMessage="Nenhuma empresa encontrada" rows="10" paginatorPosition="bottom"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
                              rowsPerPageTemplate="5,10,15">
                     <p:column headerText="Nome">
-                        <h:outputText value="#{empresaC.empresa.nome}" />
+                        <h:outputText value="#{empresa.nome}" />
                     </p:column>
                     <p:column headerText="Nome Contato responsável">
-                        <h:outputText value="#{empresaC.empresa.nomeContato}" />
+                        <h:outputText value="#{empresa.nomeContato}" />
                     </p:column>
                     <p:column headerText="Contato responsável">
-                        <h:outputText value="#{empresaC.empresa.telContato}" />
+                        <h:outputText value="#{empresa.telContato}" />
                     </p:column>
                     <p:column headerText="Endereço" >
-                        <h:outputText value="#{empresaC.empresa.endereco}" />
+                        <h:outputText value="Rua#{empresa.endereco.logradouro}, Bairro: #{empresa.endereco.bairro}" />
                     </p:column>
 
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
-                                         process="@this" update="@form" actionListener="#{empresaC.alterarEmpresa()}">
+                                         process="@this" update="@form" actionListener="#{empresaC.alterarEmpresa}">
                             <f:setPropertyActionListener target="#{empresaC.empresa}" value="#{empresa}"/>          
                         </p:commandButton>
 
@@ -104,22 +104,22 @@
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
                                  styleClass="painel_grid_noborder" >
                         <p:outputLabel for="logradouro" value="Logradouro:" />
-                        <p:inputText id="logradouro" value="#{empresaC.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:inputText id="logradouro" value="#{empresaC.empresa.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
                         
                         <p:outputLabel for="numero" value="Número:" />
-                        <p:inputText id="numero" value="#{empresaC.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:inputText id="numero" value="#{empresaC.empresa.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
                         
                         <p:outputLabel for="bairro" value="Bairro:" />
-                        <p:inputText id="bairro" value="#{empresaC.endereco.bairro}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:inputText id="bairro" value="#{empresaC.empresa.endereco.bairro}" required="true" style="width: 100%; max-width: 600px;"/>
                         
                         <p:outputLabel for="cidade" value="Cidade:" />
-                        <p:inputText id="cidade" value="#{empresaC.endereco.cidade}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:inputText id="cidade" value="#{empresaC.empresa.endereco.cidade}" required="true" style="width: 100%; max-width: 600px;"/>
                         
                         <p:outputLabel for="complemento" value="Complemento:" />
-                        <p:inputText id="complemento" value="#{empresaC.endereco.complemento}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:inputText id="complemento" value="#{empresaC.empresa.endereco.complemento}" required="true" style="width: 100%; max-width: 600px;"/>
                         
                         <p:outputLabel for="obs" value="Observação:" />
-                        <p:inputText id="obs" value="#{empresaC.endereco.observacao}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:inputText id="obs" value="#{empresaC.empresa.endereco.observacao}" required="true" style="width: 100%; max-width: 600px;"/>
                     </p:panelGrid>
                     <p:separator />
                 </p:panel>

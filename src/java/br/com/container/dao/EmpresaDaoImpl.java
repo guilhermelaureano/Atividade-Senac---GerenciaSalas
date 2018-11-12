@@ -24,7 +24,7 @@ public class EmpresaDaoImpl extends BaseDaoImpl<Empresa, Long> implements Empres
 
     @Override
     public List<Empresa> listaTodos(Session session) throws HibernateException {
-        return session.createQuery("from Professor").list();
+        return session.createQuery("from Empresa").list();
     }
 
     @Override

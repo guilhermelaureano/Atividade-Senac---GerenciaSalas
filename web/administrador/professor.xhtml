@@ -68,7 +68,7 @@
 
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
-                                         process="@this" update="@form" actionListener="#{profC.alterarProf}">
+                                         process="@this" update="@form" actionListener="#{profC.alterarProf()}">
                             <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"/>          
                         </p:commandButton>
 
