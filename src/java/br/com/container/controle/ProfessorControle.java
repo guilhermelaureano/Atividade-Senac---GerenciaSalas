@@ -104,7 +104,7 @@ public class ProfessorControle implements Serializable {
             endereco.setPessoa(prof);
             dao.salvarOuAlterar(prof, session);
             Mensagem.salvar("Professor " + prof.getNome());
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
             System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
         } finally {

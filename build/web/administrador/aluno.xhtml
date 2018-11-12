@@ -12,37 +12,26 @@
 
 
         <h:form id="form_pesquisa">
-
-            <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" rendered="#{!alunoC.mostraToolbar}"  >
-                <p:toolbarGroup  >
-                    <p:commandButton value="Pesquisar" actionListener="#{alunoC.pesquisar}"
-                                     update="@form" process="@this panelGridPesq" />
-                    <p:separator></p:separator>
-                    <p:commandButton value="Novo" actionListener="#{alunoC.mudaToolbar}" update="@form" global="false"  />
-                </p:toolbarGroup>
-            </p:toolbar>
-
-            <p:toolbar id="toolbar_salvar" styleClass="toolbar" rendered="#{alunoC.mostraToolbar}">
-                <p:toolbarGroup  >
-                    <p:commandButton value="Salvar" action="#{alunoC.salvar()}" update="aba_alterar" />
-                    <p:separator></p:separator>
-                    <p:commandButton value="Cancelar" actionListener="#{alunoC.mudaToolbar}" immediate="true"
-                                     update="@form" global="false" />
-                </p:toolbarGroup>
-            </p:toolbar>
-
-            <p:messages id="mens"  autoUpdate="true" />
+            <p:messages id="mens" autoUpdate="true" />
 
             <h:panelGroup id="aba_pesquisa" rendered="#{!alunoC.mostraToolbar}" >
+                <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" >
+                    <p:toolbarGroup  >
+                        <p:commandButton value="Pesquisar" actionListener="#{alunoC.pesquisar()}"
+                                         update="@form" process="@this panelGridPesq" />
+                        <p:separator></p:separator>
+                        <p:commandButton value="Novo" actionListener="#{alunoC.mudaToolbar}" update="@form" global="false"  />
+                    </p:toolbarGroup>
+                </p:toolbar>
                 <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
 
                     <p:outputLabel for="pesqNome" value="Nome Aluno:"/>
-                    <p:inputText id="pesqNome" value="#{alunoC.pesqNome}" style="margin-left: 5px"/>
+                    <p:inputText id="pesqNome" value="#{alunoC.aluno.nome}" style="margin-left: 5px"/>
                     <p:spacer />
 
                 </p:panelGrid>
 
-                <p:dataTable id="dadosAluno" value="#{alunoC.modelAlunos}" var="alunos" reflow="true" paginator="true"
+                <p:dataTable id="dadosAluno" value="#{alunoC.modelAlunos}" var="aluno" reflow="true" paginator="true"
                              style="margin-top: 20px;"  emptyMessage="Nenhum Aluno encontrado" rows="10" paginatorPosition="bottom"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
@@ -67,7 +56,8 @@
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
                                          process="@this" update="@form" actionListener="#{alunoC.alterarAluno}">
-                            <f:setPropertyActionListener target="#{alunoC.aluno}" value="#{aluno}"/>          
+                            <f:setPropertyActionListener target="#{alunoC.aluno}" value="#{aluno}"/>
+                            <f:setPropertyActionListener target="#{alunoC.endereco}" value="#{aluno}"/>
                         </p:commandButton>
 
                         <p:commandButton icon="ui-icon-trash" actionListener="#{alunoC.excluir()}"
@@ -88,6 +78,15 @@
             </p:confirmDialog>
 
             <h:panelGroup id="aba_alterar" rendered="#{alunoC.mostraToolbar}">
+                <p:toolbar id="toolbar_salvar" styleClass="toolbar" >
+
+                    <p:toolbarGroup  >
+                        <p:commandButton value="Salvar" action="#{alunoC.salvar()}" update="aba_alterar" />
+                        <p:separator></p:separator>
+                        <p:commandButton value="Cancelar" actionListener="#{alunoC.mudaToolbar}" immediate="true"
+                                         update="@form" global="false" />
+                    </p:toolbarGroup>
+                </p:toolbar>
                 <p:separator />
                 <p:panel header="Dados Pessoais"> 
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
@@ -111,11 +110,11 @@
                 <p:panel header="Endereço" >
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
                                  styleClass="painel_grid_noborder" >
-                        <p:outputLabel for="logradouro" value="Logradouro:" />
-                        <p:inputText id="logradouro" value="#{alunoC.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:outputLabel for="rua" value="Logradouro:" />
+                        <p:inputText id="rua" value="#{alunoC.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
 
-                        <p:outputLabel for="numero" value="Número:" />
-                        <p:inputText id="numero" value="#{alunoC.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
+                        <p:outputLabel for="num" value="Número:" />
+                        <p:inputText id="num" value="#{alunoC.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
 
                         <p:outputLabel for="bairro" value="Bairro:" />
                         <p:inputText id="bairro" value="#{alunoC.endereco.bairro}" required="true" style="width: 100%; max-width: 600px;"/>

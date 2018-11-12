@@ -46,18 +46,14 @@ public class HibernateUtil {
             cfg.addAnnotatedClass(Funcionario.class);
             cfg.addAnnotatedClass(Agenda.class);
             cfg.addAnnotatedClass(Professor.class);
+            cfg.addAnnotatedClass(Aluno.class);
             cfg.addAnnotatedClass(Planejamento.class);
             cfg.addAnnotatedClass(Atividade.class);
             cfg.addAnnotatedClass(Curso.class);
             cfg.addAnnotatedClass(Disciplina.class);
             cfg.addAnnotatedClass(Endereco.class);
-            cfg.addAnnotatedClass(Aluno.class);
             cfg.addAnnotatedClass(Empresa.class);
             
-            
-            
-            
-
             cfg.configure("/br/com/container/dao/hibernate.cfg.xml");
 
             ServiceRegistry serviceRegistry =

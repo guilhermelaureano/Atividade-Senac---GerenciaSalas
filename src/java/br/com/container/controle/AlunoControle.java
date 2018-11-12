@@ -26,11 +26,9 @@ import org.hibernate.Session;
  */
 @ManagedBean(name = "alunoC")
 @ViewScoped
-public class AlunoControle implements Serializable{
-    
-    private boolean mostraToolbar = false;
-    private AlunoDao alunoDao;
-    private String pesqNome = "";
+public class AlunoControle implements Serializable {
+
+    private boolean mostraToolbar;
     private Session session;
     private AlunoDao dao;
     private Aluno aluno;
@@ -38,17 +36,6 @@ public class AlunoControle implements Serializable{
     private DataModel<Aluno> modelAlunos;
     private Endereco endereco;
 
-    public Endereco getEndereco() {
-        if(endereco == null){
-            endereco = new Endereco();
-        }
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-    
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
             session = HibernateUtil.abreSessao();
@@ -59,7 +46,7 @@ public class AlunoControle implements Serializable{
         aluno = new Aluno();
         aluno.setWhatsapp(true);
         alunos = new ArrayList();
-        pesqNome = "";
+        aluno.setNome(null);
         mostraToolbar = !mostraToolbar;
     }
 
@@ -67,13 +54,13 @@ public class AlunoControle implements Serializable{
         dao = new AlunoDaoImpl();
         try {
             abreSessao();
-            if (!pesqNome.equals("")) {
-                alunos = dao.pesquisaPorNome(pesqNome, session);
+            if (!aluno.getNome().equals("")) {
+                alunos = dao.pesquisaPorNome(aluno.getNome(), session);
             } else {
                 alunos = dao.listaTodos(session);
             }
             modelAlunos = new ListDataModel(alunos);
-            pesqNome = null;
+            aluno.setNome(null);
         } catch (HibernateException ex) {
             System.err.println("Erro pesquisa aluno:\n" + ex.getMessage());
         } finally {
@@ -82,19 +69,19 @@ public class AlunoControle implements Serializable{
     }
 
     public void salvar() {
-        alunoDao = new AlunoDaoImpl();
+        dao = new AlunoDaoImpl();
         try {
             abreSessao();
             aluno.setEndereco(endereco);
             endereco.setPessoa(aluno);
-            alunoDao.salvarOuAlterar(aluno, session);
+            dao.salvarOuAlterar(aluno, session);
             Mensagem.salvar("Aluno " + aluno.getNome());
-        } catch (HibernateException e) {
-            System.out.println("Erro ao salvar aluno " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Erro no salvar alunoDao Controle "
-                    + e.getMessage());
+        } catch (HibernateException ex) {
+            Mensagem.mensagemError("Erro ao salvar\nTente novamente");
+            System.err.println("Erro pesquisa aluno:\n" + ex.getMessage());
         } finally {
+            aluno = new Aluno();
+            aluno.setWhatsapp(true);
             session.close();
         }
     }
@@ -102,9 +89,8 @@ public class AlunoControle implements Serializable{
     public void alterarAluno() {
         mostraToolbar = !mostraToolbar;
         aluno = modelAlunos.getRowData();
-        aluno.getEndereco();
+        endereco = aluno.getEndereco();
     }
-
 
     public void excluir() {
         aluno = modelAlunos.getRowData();
@@ -122,21 +108,12 @@ public class AlunoControle implements Serializable{
     }
 
     //Getters e Setters
-
     public boolean isMostraToolbar() {
         return mostraToolbar;
     }
 
     public void setMostraToolbar(boolean mostraToolbar) {
         this.mostraToolbar = mostraToolbar;
-    }
-
-    public String getPesqNome() {
-        return pesqNome;
-    }
-
-    public void setPesqNome(String pesqNome) {
-        this.pesqNome = pesqNome;
     }
 
     public Session getSession() {
@@ -178,5 +155,15 @@ public class AlunoControle implements Serializable{
     public void setModelAlunos(DataModel<Aluno> modelAlunos) {
         this.modelAlunos = modelAlunos;
     }
-    
+
+    public Endereco getEndereco() {
+        if (endereco == null) {
+            endereco = new Endereco();
+        }
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 }
