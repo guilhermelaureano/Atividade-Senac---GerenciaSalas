@@ -44,12 +44,12 @@ public class AlunoControle implements Serializable {
 
     public void mudaToolbar() {
         aluno = new Aluno();
-        aluno.setWhatsapp(true);
         alunos = new ArrayList();
         aluno.setNome(null);
+        endereco = new Endereco();
         mostraToolbar = !mostraToolbar;
     }
-
+    
     public void pesquisar() {
         dao = new AlunoDaoImpl();
         try {
@@ -62,7 +62,7 @@ public class AlunoControle implements Serializable {
             modelAlunos = new ListDataModel(alunos);
             aluno.setNome(null);
         } catch (HibernateException ex) {
-            System.err.println("Erro pesquisa aluno:\n" + ex.getMessage());
+            System.err.println("Erro ao pesquisar aluno:\n" + ex.getMessage());
         } finally {
             session.close();
         }
@@ -78,10 +78,9 @@ public class AlunoControle implements Serializable {
             Mensagem.salvar("Aluno " + aluno.getNome());
         } catch (HibernateException ex) {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
-            System.err.println("Erro pesquisa aluno:\n" + ex.getMessage());
+            System.err.println("Erro ao pesquisar aluno:\n" + ex.getMessage());
         } finally {
             aluno = new Aluno();
-            aluno.setWhatsapp(true);
             session.close();
         }
     }
@@ -100,13 +99,13 @@ public class AlunoControle implements Serializable {
             dao.remover(aluno, session);
             Mensagem.excluir("Aluno " + aluno.getNome());
             aluno = new Aluno();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             System.err.println("Erro ao excluir aluno:\n" + ex.getMessage());
         } finally {
             session.close();
         }
     }
-
+    
     //Getters e Setters
     public boolean isMostraToolbar() {
         return mostraToolbar;
@@ -116,23 +115,10 @@ public class AlunoControle implements Serializable {
         this.mostraToolbar = mostraToolbar;
     }
 
-    public Session getSession() {
-        return session;
-    }
-
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    public AlunoDao getDao() {
-        return dao;
-    }
-
-    public void setDao(AlunoDao dao) {
-        this.dao = dao;
-    }
-
     public Aluno getAluno() {
+        if (aluno == null){
+            aluno = new Aluno();
+        }
         return aluno;
     }
 
@@ -141,6 +127,9 @@ public class AlunoControle implements Serializable {
     }
 
     public List<Aluno> getAlunos() {
+        if(alunos == null){
+           alunos = new ArrayList();
+        }
         return alunos;
     }
 
@@ -157,8 +146,8 @@ public class AlunoControle implements Serializable {
     }
 
     public Endereco getEndereco() {
-        if (endereco == null) {
-            endereco = new Endereco();
+        if(endereco == null){
+           endereco = new Endereco();
         }
         return endereco;
     }

@@ -46,6 +46,7 @@ public class EmpresaControle implements Serializable {
         empresa = new Empresa();
         empresas = new ArrayList();
         empresa.setNome(null);
+        endereco = new Endereco();
         mostraToolbar = !mostraToolbar;
     }
 

@@ -83,7 +83,6 @@ public class FuncionarioControle implements Serializable {
         funcao = new Funcao();
     }
 
-    //metodos getts e setts
     public void carregarParaAlterar() {
         mostra_toolbar = !mostra_toolbar;
         funcionario = modelFuncionarios.getRowData();

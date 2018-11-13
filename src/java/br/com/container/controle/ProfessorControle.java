@@ -66,6 +66,7 @@ public class ProfessorControle implements Serializable {
         prof.setWhatsapp(true);
         profs = new ArrayList();
         disciplinas = new ArrayList();
+        endereco = new Endereco();
         pesqNome = "";
         mostraToolbar = !mostraToolbar;
     }
@@ -118,7 +119,7 @@ public class ProfessorControle implements Serializable {
     public void alterarProf() {
         mostraToolbar = !mostraToolbar;
         prof = modelProfs.getRowData();
-        prof.getEndereco();
+        endereco = prof.getEndereco();
         parseDisciplinas(prof.getDisciplinas());
     }
 

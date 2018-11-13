@@ -29,7 +29,7 @@ public class AlunoDaoImpl extends BaseDaoImpl<Aluno, Long> implements AlunoDao{
 
     @Override
     public List<Aluno> pesquisaPorNome(String nome, Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Aluno a where a.nome like :nome");
+        Query consulta = session.createQuery("from Aluno p where p.nome like :nome");
         consulta.setParameter("nome", "%" + nome + "%");
         return consulta.list();
     }
