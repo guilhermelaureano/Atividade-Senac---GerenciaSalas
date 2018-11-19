@@ -65,7 +65,6 @@ public class ProfessorControle implements Serializable {
         dao = new ProfessorDaoImpl();
         try {
             abreSessao();
-
             if (!pesqNome.equals("") && !pesqDisciplina.equals("")) {
                 profs = dao.pesqPorNomeEDisciplina(pesqNome, pesqDisciplina, session);
             } else if (!pesqDisciplina.equals("")) {
@@ -75,7 +74,29 @@ public class ProfessorControle implements Serializable {
             } else {
                 profs = dao.listaTodos(session);
             }
-
+            modelProfs = new ListDataModel(profs);
+            pesqNome = null;
+            pesqDisciplina = null;
+        } catch (HibernateException ex) {
+            System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
+        } finally {
+            session.close();
+        }
+    }
+    
+    public void localidade() {
+        dao = new ProfessorDaoImpl();
+        try {
+            abreSessao();
+            if (!pesqNome.equals("") && !pesqDisciplina.equals("")) {
+                profs = dao.pesqPorNomeEDisciplina(pesqNome, pesqDisciplina, session);
+            } else if (!pesqDisciplina.equals("")) {
+                profs = dao.pesqPorDisciplina(pesqDisciplina, session);
+            } else if (!pesqNome.equals("")) {
+                profs = dao.pesquisaPorNome(pesqNome, session);
+            } else {
+                profs = dao.listaTodos(session);
+            }
             modelProfs = new ListDataModel(profs);
             pesqNome = null;
             pesqDisciplina = null;

@@ -17,6 +17,8 @@
                 <p:toolbarGroup  >
                     <p:commandButton value="Pesquisar" actionListener="#{profC.pesquisar()}"
                                      update="@form" process="@this panelGridPesq" />
+                    <p:commandButton value="Pesquisar por localidade" actionListener="#{profC.localidade()}"
+                                     update="@form" process="@this panelGridPesq" />
                     <p:separator></p:separator>
                     <p:commandButton value="Novo" actionListener="#{profC.mudaToolbar}" update="@form" global="false"  />
                 </p:toolbarGroup>

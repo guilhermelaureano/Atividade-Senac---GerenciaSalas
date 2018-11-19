@@ -42,8 +42,12 @@ public class ProfessorDaoImpl extends BaseDaoImpl<Professor, Long> implements Pr
     }
 
     @Override
-    public List<Professor> pesqPorBairro(String bairro, Session session) throws HibernateException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Professor> pesqPorBairro(String bairro, String cidade, Session session) throws HibernateException {
+        
+        Query consulta = session.createQuery("from Professor p where p.endereco.bairro like :bairro and p.endereco.cidade like :cidade");
+        consulta.setParameter("bairro", "%" + bairro + "%");
+        consulta.setParameter("cidade", "%" + cidade + "%");
+        return consulta.list();
     }
     
     @Override
@@ -53,4 +57,23 @@ public class ProfessorDaoImpl extends BaseDaoImpl<Professor, Long> implements Pr
         consulta.setParameter("disciplinas", ";%" + disciplina + "%;");
         return consulta.list();
     }
+
+    @Override
+    public List<Professor> pesqPorCidade(String cidade, Session session) throws HibernateException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static void main(String[] args) {
+        ProfessorDaoImpl daoImpl = new ProfessorDaoImpl();
+        Session session = HibernateUtil.abreSessao();
+        List<Professor> profs = daoImpl.pesqPorBairro("b", "c", session);
+        session.close();
+        System.out.println("id " + profs.get(0).getId());
+        System.out.println("nome " + profs.get(0).getNome());
+        System.out.println("rua " + profs.get(0).getEndereco().getLogradouro());
+        
+        
+    }
+    
+    
 }

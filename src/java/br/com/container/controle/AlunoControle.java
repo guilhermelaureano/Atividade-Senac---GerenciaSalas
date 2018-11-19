@@ -42,27 +42,28 @@ public class AlunoControle implements Serializable {
         }
     }
 
-    public void mudaToolbar() {
+    private void limparTela() {
         aluno = new Aluno();
         alunos = new ArrayList();
+        aluno.setWhatsapp(true);
         aluno.setNome(null);
         endereco = new Endereco();
+    }
+
+    public void mudaToolbar() {
+        limparTela();
         mostraToolbar = !mostraToolbar;
     }
-    
+
     public void pesquisar() {
         dao = new AlunoDaoImpl();
         try {
             abreSessao();
-            if (!aluno.getNome().equals("")) {
-                alunos = dao.pesquisaPorNome(aluno.getNome(), session);
-            } else {
-                alunos = dao.listaTodos(session);
-            }
+            alunos = dao.pesquisaPorNome(aluno.getNome(), session);
             modelAlunos = new ListDataModel(alunos);
             aluno.setNome(null);
-        } catch (HibernateException ex) {
-            System.err.println("Erro ao pesquisar aluno:\n" + ex.getMessage());
+        } catch (HibernateException e) {
+            System.err.println("Erro ao pesquisar aluno:\n" + e.getMessage());
         } finally {
             session.close();
         }
@@ -80,7 +81,7 @@ public class AlunoControle implements Serializable {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
             System.err.println("Erro ao pesquisar aluno:\n" + ex.getMessage());
         } finally {
-            aluno = new Aluno();
+            limparTela();
             session.close();
         }
     }
@@ -105,7 +106,7 @@ public class AlunoControle implements Serializable {
             session.close();
         }
     }
-    
+
     //Getters e Setters
     public boolean isMostraToolbar() {
         return mostraToolbar;
@@ -116,7 +117,7 @@ public class AlunoControle implements Serializable {
     }
 
     public Aluno getAluno() {
-        if (aluno == null){
+        if (aluno == null) {
             aluno = new Aluno();
         }
         return aluno;
@@ -127,8 +128,8 @@ public class AlunoControle implements Serializable {
     }
 
     public List<Aluno> getAlunos() {
-        if(alunos == null){
-           alunos = new ArrayList();
+        if (alunos == null) {
+            alunos = new ArrayList();
         }
         return alunos;
     }
@@ -146,8 +147,8 @@ public class AlunoControle implements Serializable {
     }
 
     public Endereco getEndereco() {
-        if(endereco == null){
-           endereco = new Endereco();
+        if (endereco == null) {
+            endereco = new Endereco();
         }
         return endereco;
     }

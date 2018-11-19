@@ -31,7 +31,6 @@ public class FuncionarioControle implements Serializable {
     private Funcionario funcionario;
     private FuncionarioDao dao;
     private Funcao funcao;
-    private String pesqNome = "";
     private Session session;
     private DataModel<Funcionario> modelFuncionarios;
     private List<Funcionario> funcionarios;
@@ -55,7 +54,6 @@ public class FuncionarioControle implements Serializable {
         funcionario.setWhatsapp(true);
         funcionarios = new ArrayList();
         endereco = new Endereco();
-        pesqNome = "";
         mostra_toolbar = !mostra_toolbar;
     }
 
@@ -113,7 +111,6 @@ public class FuncionarioControle implements Serializable {
             endereco.setPessoa(funcionario);
             dao.salvarOuAlterar(funcionario, session);
             Mensagem.salvar("Funcionário " + funcionario.getNome());
-
         } catch (HibernateException e) {
             boolean isLoginDuplicado = e.getCause().getMessage().contains("'email_UNIQUE'");
             if (isLoginDuplicado) {
