@@ -41,32 +41,22 @@ public class ProfessorControle implements Serializable {
     private List<String> disciplinas;
     private Endereco endereco;
 
-    public Endereco getEndereco() {
-        if(endereco == null){
-            endereco = new Endereco();
-        }
-        
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    
-    
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
             session = HibernateUtil.abreSessao();
         }
     }
-
-    public void mudaToolbar() {
+    
+    private void limpar(){
         prof = new Professor();
         prof.setWhatsapp(true);
         profs = new ArrayList();
         disciplinas = new ArrayList();
         endereco = new Endereco();
+    }
+
+    public void mudaToolbar() {
+        limpar();
         pesqNome = "";
         mostraToolbar = !mostraToolbar;
     }
@@ -109,9 +99,7 @@ public class ProfessorControle implements Serializable {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
             System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
         } finally {
-            prof = new Professor();
-            prof.setWhatsapp(true);
-            disciplinas = new ArrayList();
+            limpar();
             session.close();
         }
     }
@@ -157,7 +145,7 @@ public class ProfessorControle implements Serializable {
             dao.remover(prof, session);
             Mensagem.excluir("Professor " + prof.getNome());
             prof = new Professor();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             System.err.println("Erro ao excluir professor:\n" + ex.getMessage());
         } finally {
             session.close();
@@ -237,5 +225,17 @@ public class ProfessorControle implements Serializable {
 
     public void setDisciplinas(List<String> disciplinas) {
         this.disciplinas = disciplinas;
+    }
+
+    public Endereco getEndereco() {
+        if (endereco == null) {
+            endereco = new Endereco();
+        }
+
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 }

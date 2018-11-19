@@ -29,9 +29,10 @@ import org.hibernate.Session;
 public class FuncionarioControle implements Serializable {
 
     private Funcionario funcionario;
-    private FuncionarioDao funcionarioDao;
+    private FuncionarioDao dao;
     private Funcao funcao;
-    private Session sessao;
+    private String pesqNome = "";
+    private Session session;
     private DataModel<Funcionario> modelFuncionarios;
     private List<Funcionario> funcionarios;
     private List<SelectItem> funcoes;
@@ -44,57 +45,54 @@ public class FuncionarioControle implements Serializable {
     }
 
     private void abreSessao() {
-        if (sessao == null) {
-            sessao = HibernateUtil.abreSessao();
-        } else if (!sessao.isOpen()) {
-            sessao = HibernateUtil.abreSessao();
+        if (session == null || !session.isOpen()) {
+            session = HibernateUtil.abreSessao();
         }
     }
 
-    public void novo() {
-        mostra_toolbar = !mostra_toolbar;
-
-    }
-
-    public void novaPesquisa() {
-        mostra_toolbar = !mostra_toolbar;
-    }
-
-    public void preparaAlterar() {
+    public void mudaToolbar() {
+        funcionario = new Funcionario();
+        funcionario.setWhatsapp(true);
+        funcionarios = new ArrayList();
+        endereco = new Endereco();
+        pesqNome = "";
         mostra_toolbar = !mostra_toolbar;
     }
 
     public void pesquisar() {
-        funcionarioDao = new FuncionarioDaoImpl();
+        dao = new FuncionarioDaoImpl();
         try {
             abreSessao();
-            funcionarios = funcionarioDao.pesquisaPorNome(funcionario.getNome(), sessao);
+            funcionarios = dao.pesquisaPorNome(funcionario.getNome(), session);
             modelFuncionarios = new ListDataModel(funcionarios);
             funcionario.setNome(null);
         } catch (HibernateException e) {
             System.out.println("erro ao pesquisar funcionario por nome: " + e.getMessage());
         } finally {
-            sessao.close();
+            session.close();
         }
     }
 
     public void limpar() {
         funcionario = new Funcionario();
+        funcionario.setWhatsapp(true);
         funcao = new Funcao();
+        endereco = new Endereco();
     }
 
     public void carregarParaAlterar() {
         mostra_toolbar = !mostra_toolbar;
         funcionario = modelFuncionarios.getRowData();
         funcao = funcionario.getFuncao();
+        endereco = funcionario.getEndereco();
     }
 
     public void excluir() {
         funcionario = modelFuncionarios.getRowData();
-        funcionarioDao = new FuncionarioDaoImpl();
+        dao = new FuncionarioDaoImpl();
         abreSessao();
         try {
-            funcionarioDao.remover(funcionario, sessao);
+            dao.remover(funcionario, session);
             funcionarios.remove(funcionario);
             modelFuncionarios = new ListDataModel(funcionarios);
             Mensagem.excluir("Funcionário");
@@ -102,18 +100,18 @@ public class FuncionarioControle implements Serializable {
         } catch (HibernateException e) {
             System.out.println("erro ao excluir: " + e.getMessage());
         } finally {
-            sessao.close();
+            session.close();
         }
     }
 
     public void salvar() {
         funcionario.setFuncao(funcao);
-        funcionarioDao = new FuncionarioDaoImpl();
+        dao = new FuncionarioDaoImpl();
         try {
             abreSessao();
             funcionario.setEndereco(endereco);
             endereco.setPessoa(funcionario);
-            funcionarioDao.salvarOuAlterar(funcionario, sessao);
+            dao.salvarOuAlterar(funcionario, session);
             Mensagem.salvar("Funcionário " + funcionario.getNome());
 
         } catch (HibernateException e) {
@@ -126,7 +124,8 @@ public class FuncionarioControle implements Serializable {
             System.out.println("Erro no salvar funcionarioDao Controle "
                     + e.getMessage());
         } finally {
-            sessao.close();
+            limparTela();
+            session.close();
         }
     }
 
@@ -137,14 +136,14 @@ public class FuncionarioControle implements Serializable {
             funcoes = new ArrayList();
 
             FuncaoDao funcaoDao = new FuncaoDaoImpl();
-            todasFuncoes = funcaoDao.listaTodos(sessao);
+            todasFuncoes = funcaoDao.listaTodos(session);
             todasFuncoes.stream().forEach((perf) -> {
                 funcoes.add(new SelectItem(perf.getId(), perf.getNome()));
             });
         } catch (HibernateException hi) {
             System.out.println("Erro ao carregar função " + hi.getMessage());
         } finally {
-            sessao.close();
+            session.close();
         }
     }
 

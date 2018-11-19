@@ -217,19 +217,14 @@
                         <!--<li class="is-selected"  >-->
 
                         <li>
-                            <h:link outcome="/administrador/usuario" >
-                                <i class="fa fw-fw fa-users"> - Usuários</i></h:link>
+                            <h:link outcome="/administrador/agenda" >
+                                <i class="fa fa-book"> - Agenda</i>
+                            </h:link>
                         </li>
 
                         <li>
                             <h:link outcome="/administrador/sala" >
-                                <i class="fa fa-graduation-cap"> - Sala</i></h:link>
-                        </li>
-                        
-                        <li>
-                            <h:link outcome="/administrador/agenda" >
-                                <i class="fa fa-book"> - Agenda</i>
-                            </h:link>
+                                <i class="fa fa-home"> - Sala</i></h:link>
                         </li>
                         
                         <li>
@@ -239,25 +234,40 @@
                         </li>
                         
                         <li>
+                            <h:link outcome="/logado/salaLimpeza" >
+                                <i class="fa fa fa-arrows-alt"> - Salas em Uso</i>
+                            </h:link>
+                        </li>
+                        
+                        <li>
                             <h:link outcome="/administrador/ocupacao" >
                                 <i class="fa fa-calendar-check-o"> - Ocupar Sala</i></h:link>
                         </li>
+                        
                         <li>
-                            <h:link outcome="/administrador/funcionario" >
-                                <i class="fa fa-address-card-o"> - Funcionario</i></h:link>
+                            <h:link outcome="/administrador/usuario" >
+                                <i class="fa fw-fw fa-users"> - Usuários</i></h:link>
                         </li>
+                        
                         <li>
                             <h:link outcome="/administrador/funcao" >
-                                <i class="fa fa fa-shield"> - Funções</i>
+                                <i class="fa fa fa-address-card-o"> - Funções</i>
                             </h:link>
                         </li>
+                        
+                        <li>
+                            <h:link outcome="/administrador/funcionario" >
+                                <i class="fa fa-user"> - Funcionario</i></h:link>
+                        </li>
+                        
                         <li>
                             <h:link outcome="/administrador/professor" >
-                                <i class="fa fa fa-shield"> - Professores</i></h:link>
+                                <i class="fa fa fa-users"> - Professores</i></h:link>
                         </li>
+                        
                         <li>
                             <h:link outcome="/administrador/aluno" >
-                                <i class="fa fa fa-shield"> - Aluno</i></h:link>
+                                <i class="fa fa fa-graduation-cap"> - Aluno</i></h:link>
                         </li>
 <!--                        <li>
                             <h:link outcome="/administrador/processo" >
@@ -269,21 +279,17 @@
                         </li>-->
                         <li>
                             <h:link outcome="/administrador/curso" >
-                                <i class="fa fa fa-shield"> - Curso</i></h:link>
+                                <i class="fa fa fa-book"> - Curso</i></h:link>
                         </li>
 
                         <li>
                             <h:link outcome="/administrador/empresas" >
-                                <i class="fa fa fa-shield"> - Empresas</i></h:link>
+                                <i class="fa fa fa-bars"> - Empresas</i></h:link>
                         </li>
                     </h:panelGroup>
 
                     <li>
-                        <li>
-                            <h:link outcome="/logado/salaLimpeza" >
-                                <i class="fa fa fa-shield"> - Salas em Uso</i>
-                            </h:link>
-                        </li>
+                        
                         <h:form>
                             <h:commandLink action="#{usuarioLogadoC.chamaEdicaoPerfil}" >
                                 <i class="fa fw-fw fa-user"> - Editar Perfil</i></h:commandLink>
