@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../logado/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="conteudo">
+        <h1 class="jr-titulo1">Carteirinha</h1>
+
+
+        <h:form id="form_pesquisa">
+            <p:messages id="mens"  autoUpdate="true" />
+
+            <h:panelGroup id="aba_pesquisa" rendered="#{!carteirinhaC.mostraToolbar}" >
+                <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" rendered="#{!carteirinhaC.mostraToolbar}" >
+                    <p:toolbarGroup  >
+                        <p:commandButton value="Pesquisar" actionListener="#{carteirinhaC.pesquisar()}"
+                                         update="@form" process="@this panelGridPesq" />
+                        <p:separator></p:separator>
+                        <p:commandButton value="Novo" actionListener="#{carteirinhaC.mudaToolbar}" update="@form" global="false"  />
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+                <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
+
+                    <p:outputLabel for="pesqNome" value="Nome do aluno:"/>
+                    <p:inputText id="pesqNome" value="#{carteirinhaC.carteirinha.aluno.nome}" style="margin-left: 5px"/>
+                    <p:outputLabel for ="pesqNum" value="Numero do aluno:"/>
+                    <p:inputText id="pesqNum" value="#{carteirinhaC.carteirinha.num}" style="margin-left: 5px"/>
+                    <p:spacer />
+
+                </p:panelGrid>
+
+                <p:dataTable id="dadosCarteirinha" value="#{carteirinhaC.modelCarteirinhas}" var="carteirinha" reflow="true" paginator="true"
+                             style="margin-top: 20px;"  emptyMessage="Nenhum aluno encontrado" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
+                             rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Nome completo:">
+                        <h:outputText value="#{carteirinha.aluno.nome}" />
+                    </p:column>
+                    <p:column headerText="CPF:">
+                        <h:outputText value="#{carteirinha.aluno.CPF}" />
+                    </p:column>
+                    <p:column headerText="Email:">
+                        <h:outputText value="#{carteirinha.aluno.email}" />
+                    </p:column>
+                    <p:column headerText="Telefone fixo:">
+                        <h:outputText value="#{carteirinha.aluno.foneFixo}" />
+                    </p:column>
+                    <p:column headerText="Celular:">
+                        <h:outputText value="#{carteirinha.aluno.foneMovel}" />
+                    </p:column>
+
+                    <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
+                        <p:commandButton icon="ui-icon-pencil" title="Alterar"
+                                         process="@this" update="@form" actionListener="#{carteirinhaC.alterarCarteirinha()}">
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{carteirinhaC.excluir()}"
+                                         update="dadosAluno" title="Excluir">
+                            <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
+                                       icon="ui-icon-alert" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup> 
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
+                                 icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
+                                 icon="ui-icon-close" />
+            </p:confirmDialog>
+
+            <h:panelGroup id="aba_alterar" rendered="#{alunoC.mostraToolbar}">
+                <p:toolbar id="toolbar_salvar" styleClass="toolbar" >
+                    <p:toolbarGroup  >
+                        <p:commandButton value="Salvar" action="#{alunoC.salvar()}" update="aba_alterar" />
+                        <p:separator></p:separator>
+                        <p:commandButton value="Cancelar" actionListener="#{alunoC.mudaToolbar}" immediate="true"
+                                         update="@form" global="false" />
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <p:separator />
+                <p:panel header="Dados"> 
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
+                                 styleClass="painel_grid_noborder" >
+                        <p:outputLabel for="nome" value="Nome do Aluno:" />
+                        <p:inputText id="nome" value="#{alunoC.aluno.nome}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="CPF" value="CPF:" />
+                        <p:inputMask  id="CPF" value="#{alunoC.aluno.CPF}" required="true" mask="999.999.999-99" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="email" value="Email:" />
+                        <p:inputText id="email" value="#{alunoC.aluno.email}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="foneFixo" value="Telefone fixo::" />
+                        <p:inputMask  id="foneFixo" value="#{alunoC.aluno.foneFixo}" required="true" mask="(99) 9999-9999" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="foneMovel" value="Celular:" />
+                        <p:inputMask  id="foneMovel" value="#{alunoC.aluno.foneMovel}" required="true" mask="(99) 99999-9999" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="btWhats" value="Celular tem Whatsapp:"/>
+                        <p:selectBooleanButton id="btWhats" value="#{alunoC.aluno.whatsapp}" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                    </p:panelGrid>
+                </p:panel>
+
+                <p:panel header="Endereço" >
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
+                                 styleClass="painel_grid_noborder" >
+                        <p:outputLabel for="logradouro" value="Logradouro:" />
+                        <p:inputText id="logradouro" value="#{alunoC.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="numero" value="Número:" />
+                        <p:inputText id="numero" value="#{alunoC.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="bairro" value="Bairro:" />
+                        <p:inputText id="bairro" value="#{alunoC.endereco.bairro}" required="true" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="cidade" value="Cidade:" />
+                        <p:inputText id="cidade" value="#{alunoC.endereco.cidade}" required="true" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="complemento" value="Complemento:" />
+                        <p:inputText id="complemento" value="#{alunoC.endereco.complemento}" required="true" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="obs" value="Observação:" />
+                        <p:inputText id="obs" value="#{alunoC.endereco.observacao}" required="true" style="width: 100%; max-width: 600px;"/>
+                    </p:panelGrid>
+                    <p:separator />
+                </p:panel>
+
+            </h:panelGroup>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

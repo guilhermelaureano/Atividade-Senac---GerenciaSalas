@@ -8,6 +8,7 @@ package br.com.container.dao;
 import br.com.container.modelo.Agenda;
 import br.com.container.modelo.Aluno;
 import br.com.container.modelo.Atividade;
+import br.com.container.modelo.Carteirinha;
 import br.com.container.modelo.Curso;
 import br.com.container.modelo.DiaDaSemana;
 import br.com.container.modelo.Disciplina;
@@ -55,6 +56,7 @@ public class HibernateUtil {
             cfg.addAnnotatedClass(Endereco.class);
             cfg.addAnnotatedClass(Empresa.class);
             cfg.addAnnotatedClass(Pessoa.class);
+            cfg.addAnnotatedClass(Carteirinha.class);
             
             
             cfg.configure("/br/com/container/dao/hibernate.cfg.xml");
