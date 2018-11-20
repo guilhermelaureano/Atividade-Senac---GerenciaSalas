@@ -17,6 +17,7 @@
                 <p:toolbarGroup  >
                     <p:commandButton value="Pesquisar" actionListener="#{profC.pesquisar()}"
                                      update="@form" process="@this panelGridPesq" />
+                    <p:separator></p:separator>
                     <p:commandButton value="Pesquisar por localidade" actionListener="#{profC.localidade()}"
                                      update="@form" process="@this panelGridPesq" />
                     <p:separator></p:separator>
@@ -37,13 +38,11 @@
 
             <h:panelGroup id="aba_pesquisa" rendered="#{!profC.mostraToolbar}" >
                 <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
-
                     <p:outputLabel for="pesqNome" value="Nome Professor:"/>
                     <p:inputText id="pesqNome" value="#{profC.pesqNome}" style="margin-left: 5px"/>
                     <p:outputLabel for="pesqDisc" value="Disciplina:" />
                     <p:inputText id="pesqDisc" value="#{profC.pesqDisciplina}" style="margin-left: 5px"/>
                     <p:spacer />
-
                 </p:panelGrid>
 
                 <p:dataTable id="dadosProf" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true"
@@ -84,6 +83,33 @@
 
                 </p:dataTable>
             </h:panelGroup> 
+<!--            <h:panelGroup id="aba_pesquisaLocal" rendered="#{!profC.mostraToolbar}" >
+                <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
+                    <p:outputLabel for="pesqNome" value="Bairro:"/>
+                    <p:inputText id="pesqBairro" value="#{profC.pesqBairro}" style="margin-left: 5px"/>
+                    <p:outputLabel for="pesqDisc" value="Cidade" />
+                    <p:inputText id="pesqCidade" value="#{profC.pesqCidade}" style="margin-left: 5px"/>
+                    <p:spacer />
+                </p:panelGrid>
+
+                <p:dataTable id="dadosProf" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true"
+                             style="margin-top: 20px;"  emptyMessage="Nenhum professor encontrado" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
+                             rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{prof.nome}" />
+                    </p:column>
+                    <p:column headerText="Bairro">
+                        <h:outputText value="#{prof.endereco.bairro}" />
+                    </p:column>
+                    <p:column headerText="Cidade">
+                        <h:outputText value="#{prof.endereco.cidade}" />
+                    </p:column>
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup> -->
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
                                  icon="ui-icon-check" />

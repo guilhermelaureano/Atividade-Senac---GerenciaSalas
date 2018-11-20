@@ -32,6 +32,8 @@ public class ProfessorControle implements Serializable {
     private boolean mostraToolbar = false;
     private boolean pesquisaPorDisciplina = false;
     private String pesqNome = "";
+    private String pesqBairro = "";
+    private String pesqCidade = "";
     private String pesqDisciplina = "";
     private Session session;
     private ProfessorDao dao;
@@ -46,8 +48,8 @@ public class ProfessorControle implements Serializable {
             session = HibernateUtil.abreSessao();
         }
     }
-    
-    private void limpar(){
+
+    private void limpar() {
         prof = new Professor();
         prof.setWhatsapp(true);
         profs = new ArrayList();
@@ -58,6 +60,8 @@ public class ProfessorControle implements Serializable {
     public void mudaToolbar() {
         limpar();
         pesqNome = "";
+        pesqBairro = "";
+        pesqCidade = "";
         mostraToolbar = !mostraToolbar;
     }
 
@@ -83,17 +87,15 @@ public class ProfessorControle implements Serializable {
             session.close();
         }
     }
-    
+
     public void localidade() {
         dao = new ProfessorDaoImpl();
         try {
             abreSessao();
-            if (!pesqNome.equals("") && !pesqDisciplina.equals("")) {
-                profs = dao.pesqPorNomeEDisciplina(pesqNome, pesqDisciplina, session);
-            } else if (!pesqDisciplina.equals("")) {
-                profs = dao.pesqPorDisciplina(pesqDisciplina, session);
-            } else if (!pesqNome.equals("")) {
-                profs = dao.pesquisaPorNome(pesqNome, session);
+            if (pesqBairro.equals("")) {
+                profs = dao.pesqPorBairro(pesqBairro, session);
+            } else if (pesqCidade.equals("")) {
+                profs = dao.pesqPorCidade(pesqCidade, session);
             } else {
                 profs = dao.listaTodos(session);
             }
@@ -259,4 +261,21 @@ public class ProfessorControle implements Serializable {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
+    public String getPesqBairro() {
+        return pesqBairro;
+    }
+
+    public void setPesqBairro(String pesqBairro) {
+        this.pesqBairro = pesqBairro;
+    }
+
+    public String getPesqCidade() {
+        return pesqCidade;
+    }
+
+    public void setPesqCidade(String pesqCidade) {
+        this.pesqCidade = pesqCidade;
+    }
+
 }
