@@ -56,8 +56,10 @@
 
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
+
                                          process="@this" update="@form" actionListener="#{cursoC.alterarCurso()}">
                             <f:setPropertyActionListener target="#{cursoC.nome}" value="#{curso}"/>          
+
                         </p:commandButton>
 
                         <p:commandButton icon="ui-icon-trash" actionListener="#{cursoC.excluir()}"
