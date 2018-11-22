@@ -61,17 +61,13 @@ public class ProfessorControle implements Serializable {
     public void mudaToolbar() {
         limpar();
         pesqNome = "";
+        pesqDisciplina = "";
         pesqBairro = "";
         pesqCidade = "";
-        
         mostraToolbar = !mostraToolbar;
     }
-    
+
     public void mudaDados() {
-        limpar();
-        pesqNome = "";
-        pesqBairro = "";
-        pesqCidade = "";
         mudaDados = !mudaDados;
     }
 
@@ -91,6 +87,8 @@ public class ProfessorControle implements Serializable {
             modelProfs = new ListDataModel(profs);
             pesqNome = null;
             pesqDisciplina = null;
+            pesqBairro = null;
+            pesqCidade = null;
         } catch (HibernateException ex) {
             System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
         } finally {
@@ -109,10 +107,13 @@ public class ProfessorControle implements Serializable {
             } else {
                 profs = dao.listaTodos(session);
             }
-            mudaDados = true;
+            
             modelProfs = new ListDataModel(profs);
             pesqNome = null;
             pesqDisciplina = null;
+            pesqBairro = null;
+            pesqCidade = null;
+            mudaDados();
         } catch (HibernateException ex) {
             System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
         } finally {
@@ -185,9 +186,8 @@ public class ProfessorControle implements Serializable {
             session.close();
         }
     }
-    
-    //Getters e Setters
 
+    //Getters e Setters
     public boolean isMostraToolbar() {
         return mostraToolbar;
     }
@@ -297,7 +297,5 @@ public class ProfessorControle implements Serializable {
     public void setMudaDados(boolean mudaDados) {
         this.mudaDados = mudaDados;
     }
-    
-    
 
 }

@@ -99,16 +99,19 @@
                     <p:column headerText="Nome">
                         <h:outputText value="#{prof.nome}" />
                     </p:column>
+                    
                     <p:column headerText="Fone">
                         <h:outputText value="#{prof.foneMovel}" />
                     </p:column>
-                    <p:column headerText="uyuyuy" >
+                    
+                    <p:column headerText="Bairro" >
                         <h:outputText value="#{prof.endereco.bairro}" />
                     </p:column>
-                    <p:column headerText="Whatsapp">
-                        <p:selectBooleanButton value="#{prof.endereco.cidade}" disabled="true" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                    
+                    <p:column headerText="Cidade" >
+                        <h:outputText value="#{prof.endereco.cidade}" />
                     </p:column>
-
+                    
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
                                          process="@this" update="@form" actionListener="#{profC.alterarProf()}">
