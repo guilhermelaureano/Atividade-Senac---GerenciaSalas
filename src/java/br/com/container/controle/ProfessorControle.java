@@ -30,6 +30,7 @@ import org.hibernate.Session;
 public class ProfessorControle implements Serializable {
 
     private boolean mostraToolbar = false;
+    private boolean mudaDados = false;
     private boolean pesquisaPorDisciplina = false;
     private String pesqNome = "";
     private String pesqBairro = "";
@@ -64,6 +65,14 @@ public class ProfessorControle implements Serializable {
         pesqCidade = "";
         
         mostraToolbar = !mostraToolbar;
+    }
+    
+    public void mudaDados() {
+        limpar();
+        pesqNome = "";
+        pesqBairro = "";
+        pesqCidade = "";
+        mudaDados = !mudaDados;
     }
 
     public void pesquisar() {
@@ -100,6 +109,7 @@ public class ProfessorControle implements Serializable {
             } else {
                 profs = dao.listaTodos(session);
             }
+            mudaDados = true;
             modelProfs = new ListDataModel(profs);
             pesqNome = null;
             pesqDisciplina = null;
@@ -279,5 +289,15 @@ public class ProfessorControle implements Serializable {
     public void setPesqCidade(String pesqCidade) {
         this.pesqCidade = pesqCidade;
     }
+
+    public boolean isMudaDados() {
+        return mudaDados;
+    }
+
+    public void setMudaDados(boolean mudaDados) {
+        this.mudaDados = mudaDados;
+    }
+    
+    
 
 }
