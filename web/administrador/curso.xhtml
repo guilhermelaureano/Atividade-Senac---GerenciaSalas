@@ -48,7 +48,7 @@
                              currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
                              rowsPerPageTemplate="5,10,15">
                     <p:column headerText="Curso">
-                        <h:outputText value="#{curso.curso}" />
+                        <h:outputText value="#{curso.nome}" />
                     </p:column>
                     <p:column headerText="Sigla">
                         <h:outputText value="#{curso.sigla}" />
@@ -57,14 +57,14 @@
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
                                          process="@this" update="@form" actionListener="#{cursoC.alterarCurso()}">
-                            <f:setPropertyActionListener target="#{cursoC.curs}" value="#{curso}"/>          
+                            <f:setPropertyActionListener target="#{cursoC.nome}" value="#{curso}"/>          
                         </p:commandButton>
 
                         <p:commandButton icon="ui-icon-trash" actionListener="#{cursoC.excluir()}"
                                          update="dadosCurso" title="Excluir">
                             <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
                                        icon="ui-icon-alert" />
-                            <f:setPropertyActionListener target="#{cursoC.curs}" value="#{curso}"   />
+                            <f:setPropertyActionListener target="#{cursoC.nome}" value="#{curso}"   />
                         </p:commandButton>
                     </p:column>
 
@@ -82,7 +82,7 @@
                              styleClass="painel_grid_noborder" >
 
                     <p:outputLabel for="curso" value="Curso:" />
-                    <p:inputText id="curso" value="#{cursoC.curs.curso}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
+                    <p:inputText id="curso" value="#{cursoC.curs.nome}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
 
                     <p:outputLabel for="sigla" value="Sigla:" />
                     <p:inputText  id="sigla" value="#{cursoC.curs.sigla}" size="10" style="width: 100%; max-width: 60px;"/>
