@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../logado/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="conteudo">
+        <h1 class="jr-titulo1">Equipamento</h1>
+
+
+        <h:form id="form_pesquisa">
+
+
+            <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" rendered="#{!equipamentoC.mostraToolbar}"  >
+                <p:toolbarGroup  >
+                    <p:commandButton value="Pesquisar" actionListener="#{equipamentoC.pesquisar()}"
+                                     update="@form" process="@this panelGridPesq" />
+                    <p:separator></p:separator>
+                    <p:commandButton value="Novo" actionListener="#{equipamentoC.mudaToolbar}" update="@form" global="false"  />
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:toolbar id="toolbar_salvar" styleClass="toolbar" rendered="#{equipamentoC.mostraToolbar}">
+                <p:toolbarGroup  >
+                    <p:commandButton value="Salvar" action="#{equipamentoC.salvar()}" update="aba_alterar" />
+                    <p:separator></p:separator>
+                    <p:commandButton value="Cancelar" actionListener="#{equipamentoC.mudaToolbar}" immediate="true"
+                                     update="@form" global="false" />
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:messages id="mens"  autoUpdate="true" />
+
+            <h:panelGroup id="aba_pesquisa" rendered="#{!equipamentoC.mostraToolbar}" >
+                <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
+                    <p:outputLabel for="pesqNome" value="Nome equipamento:"/>
+                    <p:inputText id="pesqNome" value="#{equipamentoC.pesqNome}" style="margin-left: 5px"/>
+                    <p:outputLabel for="pesqNum" value="Número de patrimônio" />
+                    <p:inputText id="pesqNum" value="#{equipamentoC.pesqNumPatrimonio}" style="margin-left: 5px"/>
+                    <p:spacer />
+                </p:panelGrid>
+
+                <p:dataTable id="dadosEquip" value="#{equipamentoC.modelEquips}" var="equip" reflow="true" paginator="true"
+                             style="margin-top: 20px;"  emptyMessage="Nenhum equipamento encontrado" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
+                             rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{equip.nome}" />
+                    </p:column>
+                    <p:column headerText="Número do patrimônio">
+                        <h:outputText value="#{equip.numPatrimonio}" />
+                    </p:column>
+                    <p:column headerText="Local do equipamento">
+                        <h:outputText value="#{equip.lugar}" />
+                    </p:column>
+                    <p:column headerText="Descrição do defeito" >
+                        <h:outputText value="#{equip.descricao}" />
+                    </p:column>
+                    <p:column headerText="Data de cadastro" >
+                        <h:outputText value="#{equip.dataCad}" />
+                    </p:column>
+
+
+
+                    <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
+                        <p:commandButton icon="ui-icon-pencil" title="Alterar"
+                                         process="@this" update="@form" actionListener="#{equipamentoC.alterar()}">
+                            <f:setPropertyActionListener target="#{equipamentoC.equip}" value="#{equip}"/>          
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{equipamentoC.excluir()}"
+                                         update="dadosEquip" title="Excluir">
+                            <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
+                                       icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{equipamentoC.equip}" value="#{equip}"   />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGroup> 
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 
+                                 icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" 
+                                 icon="ui-icon-close" />
+            </p:confirmDialog>
+
+            <h:panelGroup id="aba_alterar" rendered="#{equipamentoC.mostraToolbar}">
+                <p:separator />
+                <p:panel header="Dados do Equipamento"> 
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
+                                 styleClass="painel_grid_noborder" >
+                        <p:outputLabel for="nome" value="Nome:" />
+                        <p:inputText id="nome" value="#{equipamentoC.equip.nome}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="numPat" value="Número do Patrimônio:" />
+                        <p:inputText id="numPat" value="#{equipamentoC.equip.numPatrimonio}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="lugar" value="Local do equipamento:" />
+                        <p:inputText id="lugar" value="#{equipamentoC.equip.lugar}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
+
+                        <p:outputLabel for="desc" value="Descrioção do defeito:" />
+                        <p:inputText id="desc" value="#{equipamentoC.equip.descricao}" required="true" size="40" style="width: 100%; max-width: 600px;"/>
+
+                    </p:panelGrid>
+                </p:panel>
+
+            </h:panelGroup>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>
