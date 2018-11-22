@@ -17,9 +17,7 @@
                 <p:toolbarGroup  >
                     <p:commandButton value="Pesquisar" actionListener="#{profC.pesquisar()}"
                                      update="@form" process="@this panelGridPesq" />
-                    <p:separator></p:separator>
-                    <p:commandButton value="Pesquisar por localidade" actionListener="#{profC.localidade()}"
-                                     update="@form" process="@this panelGridPesq" />
+
                     <p:separator></p:separator>
                     <p:commandButton value="Novo" actionListener="#{profC.mudaToolbar}" update="@form" global="false"  />
                 </p:toolbarGroup>
@@ -42,6 +40,19 @@
                     <p:inputText id="pesqNome" value="#{profC.pesqNome}" style="margin-left: 5px"/>
                     <p:outputLabel for="pesqDisc" value="Disciplina:" />
                     <p:inputText id="pesqDisc" value="#{profC.pesqDisciplina}" style="margin-left: 5px"/>
+                    <p:spacer />
+                </p:panelGrid>
+                <p:toolbarGroup  >
+                    <p:separator></p:separator>
+                    <p:commandButton value="Pesquisar por localidade" actionListener="#{profC.localidade()}"
+                                     update="@form" process="@this panelGridPesqLocal" />
+                </p:toolbarGroup>
+                
+                <p:panelGrid id="panelGridPesqLocal" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
+                    <p:outputLabel for="pesqbairro" value="Bairro:"/>
+                    <p:inputText id="pesqbairro" value="#{profC.pesqBairro}" style="margin-left: 5px"/>
+                    <p:outputLabel for="pesqcidade" value="Cidade:" />
+                    <p:inputText id="pesqcidade" value="#{profC.pesqCidade}" style="margin-left: 5px"/>
                     <p:spacer />
                 </p:panelGrid>
 
@@ -85,9 +96,9 @@
             </h:panelGroup> 
 <!--            <h:panelGroup id="aba_pesquisaLocal" rendered="#{!profC.mostraToolbar}" >
                 <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
-                    <p:outputLabel for="pesqNome" value="Bairro:"/>
+                    <p:outputLabel for="pesqBairro" value="Bairro:"/>
                     <p:inputText id="pesqBairro" value="#{profC.pesqBairro}" style="margin-left: 5px"/>
-                    <p:outputLabel for="pesqDisc" value="Cidade" />
+                    <p:outputLabel for="pesqCidade" value="Cidade" />
                     <p:inputText id="pesqCidade" value="#{profC.pesqCidade}" style="margin-left: 5px"/>
                     <p:spacer />
                 </p:panelGrid>
@@ -138,25 +149,25 @@
 
                     </p:panelGrid>
                 </p:panel>
-                
+
                 <p:panel header="Endereço" >
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
                                  styleClass="painel_grid_noborder" >
                         <p:outputLabel for="logradouro" value="Logradouro:" />
                         <p:inputText id="logradouro" value="#{profC.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="numero" value="Número:" />
                         <p:inputText id="numero" value="#{profC.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="bairro" value="Bairro:" />
                         <p:inputText id="bairro" value="#{profC.endereco.bairro}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="cidade" value="Cidade:" />
                         <p:inputText id="cidade" value="#{profC.endereco.cidade}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="complemento" value="Complemento:" />
                         <p:inputText id="complemento" value="#{profC.endereco.complemento}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="obs" value="Observação:" />
                         <p:inputText id="obs" value="#{profC.endereco.observacao}" required="true" style="width: 100%; max-width: 600px;"/>
                     </p:panelGrid>

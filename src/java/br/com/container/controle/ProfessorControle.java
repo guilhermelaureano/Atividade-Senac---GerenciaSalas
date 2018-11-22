@@ -62,6 +62,7 @@ public class ProfessorControle implements Serializable {
         pesqNome = "";
         pesqBairro = "";
         pesqCidade = "";
+        
         mostraToolbar = !mostraToolbar;
     }
 
@@ -92,9 +93,9 @@ public class ProfessorControle implements Serializable {
         dao = new ProfessorDaoImpl();
         try {
             abreSessao();
-            if (pesqBairro.equals("")) {
+            if (!pesqBairro.equals("")) {
                 profs = dao.pesqPorBairro(pesqBairro, session);
-            } else if (pesqCidade.equals("")) {
+            } else if (!pesqCidade.equals("")) {
                 profs = dao.pesqPorCidade(pesqCidade, session);
             } else {
                 profs = dao.listaTodos(session);
@@ -174,8 +175,9 @@ public class ProfessorControle implements Serializable {
             session.close();
         }
     }
-
+    
     //Getters e Setters
+
     public boolean isMostraToolbar() {
         return mostraToolbar;
     }

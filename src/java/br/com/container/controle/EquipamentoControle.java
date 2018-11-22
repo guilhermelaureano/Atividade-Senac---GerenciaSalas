@@ -65,7 +65,7 @@ public class EquipamentoControle implements Serializable {
             } else if (!pesqNome.equals("")) {
                 equips = dao.pesquisaPorNome(pesqNome, session);
             } else if (!pesqNumPatrimonio.equals("")) {
-                equips = dao.pesquisaPorNum(pesqNome, session);
+                equips = dao.pesquisaPorNum(pesqNumPatrimonio, session);
             } else {
                 equips = dao.listaTodos(session);
             }
@@ -83,8 +83,7 @@ public class EquipamentoControle implements Serializable {
         dao = new EquipamentoDaoImpl();
         try {
             abreSessao();
-            Date dtCad = new Date();
-            equip.setDataCad(dtCad);
+            equip.setDataCad(new Date());
             dao.salvarOuAlterar(equip, session);
             Mensagem.salvar("Equipamento " + equip.getNome());
         } catch (HibernateException ex) {
