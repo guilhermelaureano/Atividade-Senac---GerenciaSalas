@@ -30,8 +30,11 @@ import org.hibernate.Session;
 public class ProfessorControle implements Serializable {
 
     private boolean mostraToolbar = false;
+    private boolean mudaDados = false;
     private boolean pesquisaPorDisciplina = false;
     private String pesqNome = "";
+    private String pesqBairro = "";
+    private String pesqCidade = "";
     private String pesqDisciplina = "";
     private Session session;
     private ProfessorDao dao;
@@ -41,41 +44,41 @@ public class ProfessorControle implements Serializable {
     private List<String> disciplinas;
     private Endereco endereco;
 
-    public Endereco getEndereco() {
-        if(endereco == null){
-            endereco = new Endereco();
-        }
-        
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    
-    
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
             session = HibernateUtil.abreSessao();
         }
     }
 
-    public void mudaToolbar() {
+    private void limpar() {
         prof = new Professor();
         prof.setWhatsapp(true);
         profs = new ArrayList();
         disciplinas = new ArrayList();
         endereco = new Endereco();
+    }
+
+    public void mudaToolbar() {
+        limpar();
         pesqNome = "";
+        pesqBairro = "";
+        pesqCidade = "";
+        
         mostraToolbar = !mostraToolbar;
+    }
+    
+    public void mudaDados() {
+        limpar();
+        pesqNome = "";
+        pesqBairro = "";
+        pesqCidade = "";
+        mudaDados = !mudaDados;
     }
 
     public void pesquisar() {
         dao = new ProfessorDaoImpl();
         try {
             abreSessao();
-
             if (!pesqNome.equals("") && !pesqDisciplina.equals("")) {
                 profs = dao.pesqPorNomeEDisciplina(pesqNome, pesqDisciplina, session);
             } else if (!pesqDisciplina.equals("")) {
@@ -85,7 +88,28 @@ public class ProfessorControle implements Serializable {
             } else {
                 profs = dao.listaTodos(session);
             }
+            modelProfs = new ListDataModel(profs);
+            pesqNome = null;
+            pesqDisciplina = null;
+        } catch (HibernateException ex) {
+            System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
+        } finally {
+            session.close();
+        }
+    }
 
+    public void localidade() {
+        dao = new ProfessorDaoImpl();
+        try {
+            abreSessao();
+            if (!pesqBairro.equals("")) {
+                profs = dao.pesqPorBairro(pesqBairro, session);
+            } else if (!pesqCidade.equals("")) {
+                profs = dao.pesqPorCidade(pesqCidade, session);
+            } else {
+                profs = dao.listaTodos(session);
+            }
+            mudaDados = true;
             modelProfs = new ListDataModel(profs);
             pesqNome = null;
             pesqDisciplina = null;
@@ -109,9 +133,7 @@ public class ProfessorControle implements Serializable {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
             System.err.println("Erro pesquisa professor:\n" + ex.getMessage());
         } finally {
-            prof = new Professor();
-            prof.setWhatsapp(true);
-            disciplinas = new ArrayList();
+            limpar();
             session.close();
         }
     }
@@ -157,14 +179,15 @@ public class ProfessorControle implements Serializable {
             dao.remover(prof, session);
             Mensagem.excluir("Professor " + prof.getNome());
             prof = new Professor();
-        } catch (Exception ex) {
+        } catch (HibernateException ex) {
             System.err.println("Erro ao excluir professor:\n" + ex.getMessage());
         } finally {
             session.close();
         }
     }
-
+    
     //Getters e Setters
+
     public boolean isMostraToolbar() {
         return mostraToolbar;
     }
@@ -238,4 +261,43 @@ public class ProfessorControle implements Serializable {
     public void setDisciplinas(List<String> disciplinas) {
         this.disciplinas = disciplinas;
     }
+
+    public Endereco getEndereco() {
+        if (endereco == null) {
+            endereco = new Endereco();
+        }
+
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getPesqBairro() {
+        return pesqBairro;
+    }
+
+    public void setPesqBairro(String pesqBairro) {
+        this.pesqBairro = pesqBairro;
+    }
+
+    public String getPesqCidade() {
+        return pesqCidade;
+    }
+
+    public void setPesqCidade(String pesqCidade) {
+        this.pesqCidade = pesqCidade;
+    }
+
+    public boolean isMudaDados() {
+        return mudaDados;
+    }
+
+    public void setMudaDados(boolean mudaDados) {
+        this.mudaDados = mudaDados;
+    }
+    
+    
+
 }

@@ -12,22 +12,20 @@
 
         <h:form id="form_pesquisa">
 
-            <!--mostra a toolbar se mostra_toolbar == true-->
             <p:toolbar styleClass="toolbar" rendered="#{!funcionarioC.mostra_toolbar}">
                 <p:toolbarGroup  >
                     <p:commandButton value="Pesquisar" actionListener="#{funcionarioC.pesquisar()}"
                                      update="dadosFuncionario" process="@this panelGridPesq" />
                     <p:separator></p:separator>
-                    <p:commandButton value="Novo" actionListener="#{funcionarioC.novo}" update="@form" global="false"  />
+                    <p:commandButton value="Novo" actionListener="#{funcionarioC.mudaToolbar()}" update="@form" global="false"  />
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <!--mostra a toolbar se mostra_toolbar == false-->
             <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" rendered="#{funcionarioC.mostra_toolbar}">
                 <p:toolbarGroup  >
                     <p:commandButton value="Salvar" action="#{funcionarioC.salvar()}" update="panelGrop" />
                     <p:separator></p:separator>
-                    <p:commandButton value="Cancelar" actionListener="#{funcionarioC.novaPesquisa}" immediate="true"
+                    <p:commandButton value="Cancelar" actionListener="#{funcionarioC.mudaToolbar()}" immediate="true"
                                      update="@form" global="false" />
                 </p:toolbarGroup>
 

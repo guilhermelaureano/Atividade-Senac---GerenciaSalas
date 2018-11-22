@@ -12,10 +12,8 @@
 
 
         <h:form id="form_pesquisa">
-            <p:messages id="mens"  autoUpdate="true" />
-
-            <h:panelGroup id="aba_pesquisa" rendered="#{!alunoC.mostraToolbar}" >
-                <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" rendered="#{!alunoC.mostraToolbar}" >
+            
+            <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" rendered="#{!alunoC.mostraToolbar}" >
                     <p:toolbarGroup  >
                         <p:commandButton value="Pesquisar" actionListener="#{alunoC.pesquisar()}"
                                          update="@form" process="@this panelGridPesq" />
@@ -23,7 +21,20 @@
                         <p:commandButton value="Novo" actionListener="#{alunoC.mudaToolbar}" update="@form" global="false"  />
                     </p:toolbarGroup>
                 </p:toolbar>
+            
+            <p:toolbar id="toolbar_salvar" styleClass="toolbar" rendered="#{alunoC.mostraToolbar}" >
+                    <p:toolbarGroup  >
+                        <p:commandButton value="Salvar" action="#{alunoC.salvar()}" update="aba_alterar" />
+                        <p:separator></p:separator>
+                        <p:commandButton value="Cancelar" actionListener="#{alunoC.mudaToolbar}" immediate="true"
+                                         update="@form" global="false" />
+                    </p:toolbarGroup>
+                </p:toolbar>
+            
+            <p:messages id="mens"  autoUpdate="true" />
 
+            <h:panelGroup id="aba_pesquisa" rendered="#{!alunoC.mostraToolbar}" >
+                
                 <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
 
                     <p:outputLabel for="pesqNome" value="Nome do aluno:"/>
@@ -78,14 +89,6 @@
             </p:confirmDialog>
 
             <h:panelGroup id="aba_alterar" rendered="#{alunoC.mostraToolbar}">
-                <p:toolbar id="toolbar_salvar" styleClass="toolbar" >
-                    <p:toolbarGroup  >
-                        <p:commandButton value="Salvar" action="#{alunoC.salvar()}" update="aba_alterar" />
-                        <p:separator></p:separator>
-                        <p:commandButton value="Cancelar" actionListener="#{alunoC.mudaToolbar}" immediate="true"
-                                         update="@form" global="false" />
-                    </p:toolbarGroup>
-                </p:toolbar>
                 <p:separator />
                 <p:panel header="Dados"> 
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 

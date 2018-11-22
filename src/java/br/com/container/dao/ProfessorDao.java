@@ -20,5 +20,9 @@ public interface ProfessorDao extends BaseDao<Professor, Long> {
 
     List<Professor> pesqPorNomeEDisciplina(String nome, String disciplina, Session session) throws HibernateException;
     
-    List<Professor> pesqPorBairro (String bairro, Session session) throws HibernateException;
+    List<Professor> pesqPorBairro(String bairro, Session session) throws HibernateException;
+    
+    List<Professor> pesqPorCidade (String cidade, Session session) throws HibernateException;
+    
+    List<Professor> pesqPorBairroCidade (String bairro, String cidade, Session session) throws HibernateException;
 }

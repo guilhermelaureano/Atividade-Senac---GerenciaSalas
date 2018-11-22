@@ -14,6 +14,7 @@ import br.com.container.modelo.DiaDaSemana;
 import br.com.container.modelo.Disciplina;
 import br.com.container.modelo.Empresa;
 import br.com.container.modelo.Endereco;
+import br.com.container.modelo.Equipamento;
 import br.com.container.modelo.Funcao;
 import br.com.container.modelo.Funcionario;
 import br.com.container.modelo.Perfil;
@@ -56,7 +57,11 @@ public class HibernateUtil {
             cfg.addAnnotatedClass(Endereco.class);
             cfg.addAnnotatedClass(Empresa.class);
             cfg.addAnnotatedClass(Pessoa.class);
+<<<<<<< HEAD
             cfg.addAnnotatedClass(Carteirinha.class);
+=======
+            cfg.addAnnotatedClass(Equipamento.class);
+>>>>>>> c58a86e1c8cd3f7f77052a5ae49df55b2e226463
             
             
             cfg.configure("/br/com/container/dao/hibernate.cfg.xml");

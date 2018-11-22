@@ -17,6 +17,7 @@
                 <p:toolbarGroup  >
                     <p:commandButton value="Pesquisar" actionListener="#{profC.pesquisar()}"
                                      update="@form" process="@this panelGridPesq" />
+
                     <p:separator></p:separator>
                     <p:commandButton value="Novo" actionListener="#{profC.mudaToolbar}" update="@form" global="false"  />
                 </p:toolbarGroup>
@@ -35,16 +36,26 @@
 
             <h:panelGroup id="aba_pesquisa" rendered="#{!profC.mostraToolbar}" >
                 <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
-
                     <p:outputLabel for="pesqNome" value="Nome Professor:"/>
                     <p:inputText id="pesqNome" value="#{profC.pesqNome}" style="margin-left: 5px"/>
                     <p:outputLabel for="pesqDisc" value="Disciplina:" />
                     <p:inputText id="pesqDisc" value="#{profC.pesqDisciplina}" style="margin-left: 5px"/>
                     <p:spacer />
-
+                </p:panelGrid>
+                <p:toolbarGroup  >
+                    <p:separator></p:separator>
+                    <p:commandButton value="Pesquisar por localidade" actionListener="#{profC.localidade()}"
+                                     update="@form" process="@this panelGridPesqLocal" />
+                </p:toolbarGroup>
+                <p:panelGrid id="panelGridPesqLocal" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
+                    <p:outputLabel for="pesqbairro" value="Bairro:"/>
+                    <p:inputText id="pesqbairro" value="#{profC.pesqBairro}" style="margin-left: 5px"/>
+                    <p:outputLabel for="pesqcidade" value="Cidade:" />
+                    <p:inputText id="pesqcidade" value="#{profC.pesqCidade}" style="margin-left: 5px"/>
+                    <p:spacer />
                 </p:panelGrid>
 
-                <p:dataTable id="dadosProf" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true"
+                <p:dataTable id="dadosProf" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true" rendered="#{!profC.mudaDados}"
                              style="margin-top: 20px;"  emptyMessage="Nenhum professor encontrado" rows="10" paginatorPosition="bottom"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
@@ -65,6 +76,38 @@
                         <p:selectBooleanButton value="#{prof.whatsapp}" disabled="true" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
                     </p:column>
 
+                    <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
+                        <p:commandButton icon="ui-icon-pencil" title="Alterar"
+                                         process="@this" update="@form" actionListener="#{profC.alterarProf()}">
+                            <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"/>          
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{profC.excluir()}"
+                                         update="dadosProf" title="Excluir">
+                            <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
+                                       icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"   />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+                <p:dataTable id="dadosProfLocal" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true" rendered="#{profC.mudaDados}"
+                             style="margin-top: 20px;"  emptyMessage="Nenhum professor encontrado" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
+                             rowsPerPageTemplate="5,10,15">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{prof.nome}" />
+                    </p:column>
+                    <p:column headerText="Fone">
+                        <h:outputText value="#{prof.foneMovel}" />
+                    </p:column>
+                    <p:column headerText="uyuyuy" >
+                        <h:outputText value="#{prof.endereco.bairro}" />
+                    </p:column>
+                    <p:column headerText="Whatsapp">
+                        <p:selectBooleanButton value="#{prof.endereco.cidade}" disabled="true" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                    </p:column>
 
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
@@ -110,25 +153,25 @@
 
                     </p:panelGrid>
                 </p:panel>
-                
+
                 <p:panel header="Endereço" >
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
                                  styleClass="painel_grid_noborder" >
                         <p:outputLabel for="logradouro" value="Logradouro:" />
                         <p:inputText id="logradouro" value="#{profC.endereco.logradouro}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="numero" value="Número:" />
                         <p:inputText id="numero" value="#{profC.endereco.numero}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="bairro" value="Bairro:" />
                         <p:inputText id="bairro" value="#{profC.endereco.bairro}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="cidade" value="Cidade:" />
                         <p:inputText id="cidade" value="#{profC.endereco.cidade}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="complemento" value="Complemento:" />
                         <p:inputText id="complemento" value="#{profC.endereco.complemento}" required="true" style="width: 100%; max-width: 600px;"/>
-                        
+
                         <p:outputLabel for="obs" value="Observação:" />
                         <p:inputText id="obs" value="#{profC.endereco.observacao}" required="true" style="width: 100%; max-width: 600px;"/>
                     </p:panelGrid>
