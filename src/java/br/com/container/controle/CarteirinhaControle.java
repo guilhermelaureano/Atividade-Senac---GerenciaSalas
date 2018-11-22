@@ -5,12 +5,19 @@
  */
 package br.com.container.controle;
 
+import br.com.container.dao.AlunoDao;
+import br.com.container.dao.AlunoDaoImpl;
 import br.com.container.dao.CarteirinhaDao;
 import br.com.container.dao.CarteirinhaDaoImpl;
+import br.com.container.dao.CursoDao;
+import br.com.container.dao.CursoDaoImpl;
 import br.com.container.dao.HibernateUtil;
+import br.com.container.modelo.Aluno;
 import br.com.container.modelo.Carteirinha;
+import br.com.container.modelo.Curso;
 import br.com.container.modelo.Endereco;
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -26,7 +33,7 @@ import org.hibernate.Session;
 
 @ManagedBean(name = "carteirinhaC")
 @ViewScoped
-public class CarteirinhaControle {
+public class CarteirinhaControle implements Serializable {
     private boolean mostraToolbar;
     private Session session;
     private CarteirinhaDao dao;
@@ -34,6 +41,9 @@ public class CarteirinhaControle {
     private List<Carteirinha> carteirinhas;
     private DataModel<Carteirinha> modelCarteirinhas;
     private Endereco endereco;
+    private Aluno aluno;
+    private Curso curso;
+    
 
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
@@ -42,10 +52,6 @@ public class CarteirinhaControle {
     }
 
     public void mudaToolbar() {
-        carteirinha = new Carteirinha();
-        carteirinhas = new ArrayList();
-        carteirinha.setNum(null);
-        endereco = new Endereco();
         mostraToolbar = !mostraToolbar;
     }
     
@@ -71,8 +77,12 @@ public class CarteirinhaControle {
         dao = new CarteirinhaDaoImpl();
         try {
             abreSessao();
+            carteirinha.setValidade(new Date());
+            carteirinha.setAluno(aluno);
+            carteirinha.setCurso(curso);
+            carteirinha.setNum(aluno.getCPF());
             dao.salvarOuAlterar(carteirinha, session);
-            Mensagem.salvar("Aluno " + carteirinha.getNum());
+            Mensagem.salvar("Carteirinha " + carteirinha.getNum());
         } catch (HibernateException ex) {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
             System.err.println("Erro ao pesquisar aluno:\n" + ex.getMessage());
@@ -85,6 +95,8 @@ public class CarteirinhaControle {
     public void alterarCarteirinha() {
         mostraToolbar = !mostraToolbar;
         carteirinha = modelCarteirinhas.getRowData();
+        aluno = carteirinha.getAluno();
+        curso = carteirinha.getCurso();
     }
 
     public void excluir() {
@@ -102,6 +114,35 @@ public class CarteirinhaControle {
         }
     }
     
+        public List<Aluno> pesquisarAluno(String query) {
+            List<Aluno> alunos = null;
+        abreSessao();
+            AlunoDao alunoDao = new AlunoDaoImpl();
+        try {
+            alunos = alunoDao.pesquisaPorNome(query, session);
+        } catch (HibernateException he) {
+            System.out.println("Erro no pesquisaAluno Carteirinha Controle " + he.getMessage());
+        } finally {
+            session.close();
+        }
+        return alunos;
+    }
+        
+        public List<Curso> pesquisarCurso(String query) {
+            List<Curso> cursos = null;
+        abreSessao();
+            CursoDao cursoDao = new CursoDaoImpl();
+        try {
+            cursos = cursoDao.pesquisaPorNome(query, session);
+        } catch (HibernateException he) {
+            System.out.println("Erro no pesquisaCurso Carteirinha Controle " + he.getMessage());
+        } finally {
+            session.close();
+        }
+        return cursos;
+    }
+        
+        
     //Getters e Setters
     public boolean isMostraToolbar() {
         return mostraToolbar;
@@ -128,6 +169,9 @@ public class CarteirinhaControle {
     }
 
     public Carteirinha getCarteirinha() {
+        if (carteirinha == null){
+            carteirinha = new Carteirinha();
+        }
         return carteirinha;
     }
 
@@ -158,6 +202,30 @@ public class CarteirinhaControle {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
+    public Aluno getAluno() {
+        if(aluno == null) {
+            aluno = new Aluno();
+        }
+        return aluno;
+    }
+
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public Curso getCurso() {
+        if (curso == null){
+            curso = new Curso();
+        }
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+    
+    
     
     
     

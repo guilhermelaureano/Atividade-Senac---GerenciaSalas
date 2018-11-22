@@ -76,7 +76,7 @@ public class CursoControle implements Serializable {
         abreSessao();
         try {
             dao.salvarOuAlterar(curs, session);
-            Mensagem.salvar("Atividade " + curs.getCurso());
+            Mensagem.salvar("Atividade " + curs.getNome());
             curs = null;
         } catch (Exception e) {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
@@ -98,7 +98,7 @@ public class CursoControle implements Serializable {
         try {
             abreSessao();
             dao.remover(curs, session);
-            Mensagem.excluir("Curso " + curs.getCurso());
+            Mensagem.excluir("Curso " + curs.getNome());
             curs = new Curso();
         } catch (Exception e) {
             System.err.println("Erro ao excluir curso" + e.getMessage());

@@ -29,8 +29,8 @@ public class CursoDaoImpl extends BaseDaoImpl<Curso, Long> implements CursoDao {
 
     @Override
     public List<Curso> pesquisaPorNome(String nome, Session session) throws HibernateException {
-        Query consulta = session.createQuery("from Curso c where c.curso like :curso");
-        consulta.setParameter("curso", "%" + nome + "%");
+        Query consulta = session.createQuery("from Curso c where c.nome like :nome");
+        consulta.setParameter("nome", "%" + nome + "%");
         return consulta.list();
     }
 

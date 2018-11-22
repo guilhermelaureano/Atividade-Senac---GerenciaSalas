@@ -7,6 +7,7 @@ package br.com.container.modelo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,8 +43,14 @@ public class Carteirinha implements Serializable  {
     private Aluno aluno;
     @Column(nullable = false)
     private String num;
-    
-    private Endereco endereco;
+
+    public Carteirinha(Long id,String num) {
+        this.id = id;
+        this.num = num;
+    }
+
+    public Carteirinha() {
+    }
 
     public Long getId() {
         return id;
@@ -60,6 +67,7 @@ public class Carteirinha implements Serializable  {
     public void setValidade(Date validade) {
         this.validade = validade;
     }
+    
 
     public Curso getCurso() {
         return curso;
@@ -84,6 +92,39 @@ public class Carteirinha implements Serializable  {
     public void setNum(String numero) {
         this.num = numero;
     }
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
 
-    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Carteirinha other = (Carteirinha) obj;
+        if (!Objects.equals(this.num, other.num)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+        
+        
+    }
+
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

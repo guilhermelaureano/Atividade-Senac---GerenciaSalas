@@ -41,11 +41,6 @@ public class Endereco implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idPessoa")
     private Pessoa pessoa;
-    
-    @JoinColumn(name = "idCarteirinha")
-    @OneToOne(cascade = CascadeType.ALL)
-    private Carteirinha carteirinha;
-    
 
     public Endereco(String logradouro, String numero, String bairro, String cidade, String complemento, String observacao) {
         this.logradouro = logradouro;
@@ -54,14 +49,6 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
         this.complemento = complemento;
         this.observacao = observacao;
-    }
-
-    public Carteirinha getCarteirinha() {
-        return carteirinha;
-    }
-
-    public void setCarteirinha(Carteirinha carteirinha) {
-        this.carteirinha = carteirinha;
     }
 
     public Endereco() {

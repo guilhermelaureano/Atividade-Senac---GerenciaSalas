@@ -78,7 +78,7 @@ public class AlunoControle implements Serializable {
             Mensagem.salvar("Aluno " + aluno.getNome());
         } catch (HibernateException ex) {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
-            System.err.println("Erro ao pesquisar aluno:\n" + ex.getMessage());
+            System.err.println("Erro ao salvar aluno:\n" + ex.getMessage());
         } finally {
             aluno = new Aluno();
             session.close();
