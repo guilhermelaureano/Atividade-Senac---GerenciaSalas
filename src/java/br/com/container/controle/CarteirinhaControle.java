@@ -19,6 +19,8 @@ import br.com.container.modelo.Endereco;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javafx.geometry.VPos;
+import javafx.scene.layout.GridPane;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.DataModel;
@@ -30,10 +32,10 @@ import org.hibernate.Session;
  *
  * @author Aluno
  */
-
 @ManagedBean(name = "carteirinhaC")
 @ViewScoped
 public class CarteirinhaControle implements Serializable {
+
     private boolean mostraToolbar;
     private Session session;
     private CarteirinhaDao dao;
@@ -43,7 +45,6 @@ public class CarteirinhaControle implements Serializable {
     private Endereco endereco;
     private Aluno aluno;
     private Curso curso;
-    
 
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
@@ -54,7 +55,7 @@ public class CarteirinhaControle implements Serializable {
     public void mudaToolbar() {
         mostraToolbar = !mostraToolbar;
     }
-    
+
     public void pesquisar() {
         dao = new CarteirinhaDaoImpl();
         try {
@@ -80,15 +81,26 @@ public class CarteirinhaControle implements Serializable {
             carteirinha.setValidade(new Date());
             carteirinha.setAluno(aluno);
             carteirinha.setCurso(curso);
+            carregaAluno();
             carteirinha.setNum(aluno.getCPF());
             dao.salvarOuAlterar(carteirinha, session);
             Mensagem.salvar("Carteirinha " + carteirinha.getNum());
+            carteirinha = new Carteirinha();
         } catch (HibernateException ex) {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
             System.err.println("Erro ao pesquisar aluno:\n" + ex.getMessage());
         } finally {
-            carteirinha = new Carteirinha();
+
             session.close();
+        }
+    }
+
+    private void carregaAluno() {
+        AlunoDao alunoDao = new AlunoDaoImpl();
+        try {
+            aluno = alunoDao.pesquisaEntidadeId(aluno.getId(), session);
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar aluno " + e.getMessage());
         }
     }
 
@@ -103,7 +115,7 @@ public class CarteirinhaControle implements Serializable {
         carteirinha = modelCarteirinhas.getRowData();
         dao = new CarteirinhaDaoImpl();
         try {
-            abreSessao();   
+            abreSessao();
             dao.remover(carteirinha, session);
             Mensagem.excluir("Carteirinha " + carteirinha.getNum());
             carteirinha = new Carteirinha();
@@ -113,11 +125,11 @@ public class CarteirinhaControle implements Serializable {
             session.close();
         }
     }
-    
-        public List<Aluno> pesquisarAluno(String query) {
-            List<Aluno> alunos = null;
+
+    public List<Aluno> pesquisarAluno(String query) {
+        List<Aluno> alunos = null;
         abreSessao();
-            AlunoDao alunoDao = new AlunoDaoImpl();
+        AlunoDao alunoDao = new AlunoDaoImpl();
         try {
             alunos = alunoDao.pesquisaPorNome(query, session);
         } catch (HibernateException he) {
@@ -127,11 +139,11 @@ public class CarteirinhaControle implements Serializable {
         }
         return alunos;
     }
-        
-        public List<Curso> pesquisarCurso(String query) {
-            List<Curso> cursos = null;
+
+    public List<Curso> pesquisarCurso(String query) {
+        List<Curso> cursos = null;
         abreSessao();
-            CursoDao cursoDao = new CursoDaoImpl();
+        CursoDao cursoDao = new CursoDaoImpl();
         try {
             cursos = cursoDao.pesquisaPorNome(query, session);
         } catch (HibernateException he) {
@@ -141,8 +153,7 @@ public class CarteirinhaControle implements Serializable {
         }
         return cursos;
     }
-        
-        
+
     //Getters e Setters
     public boolean isMostraToolbar() {
         return mostraToolbar;
@@ -169,7 +180,7 @@ public class CarteirinhaControle implements Serializable {
     }
 
     public Carteirinha getCarteirinha() {
-        if (carteirinha == null){
+        if (carteirinha == null) {
             carteirinha = new Carteirinha();
         }
         return carteirinha;
@@ -204,7 +215,7 @@ public class CarteirinhaControle implements Serializable {
     }
 
     public Aluno getAluno() {
-        if(aluno == null) {
+        if (aluno == null) {
             aluno = new Aluno();
         }
         return aluno;
@@ -215,7 +226,7 @@ public class CarteirinhaControle implements Serializable {
     }
 
     public Curso getCurso() {
-        if (curso == null){
+        if (curso == null) {
             curso = new Curso();
         }
         return curso;
@@ -224,10 +235,5 @@ public class CarteirinhaControle implements Serializable {
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
-    
-    
-    
-    
-    
 
 }

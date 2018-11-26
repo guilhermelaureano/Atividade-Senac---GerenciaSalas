@@ -24,6 +24,9 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *
@@ -133,13 +136,28 @@ public class UsuarioControle implements Serializable {
             sessao.close();
         }
     }
+    	public static String md5(String senha) {
+		String md5 = null;
+		if(null == senha) return null;
+		try{
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			digest.update(senha.getBytes(), 0, senha.length());
+			md5 = new BigInteger(1,digest.digest()).toString(16);
+		   //System.out.println(md5);
+		}catch(NoSuchAlgorithmException e){
+			e.printStackTrace();
+		}
+		return md5;
+	}
 
-    public void salvar() {
+    public void salvar() throws NoSuchAlgorithmException {
         usuario.setPerfil(perfil);
         usuarioDao = new UsuarioDaoImpl();
         abreSessao();
         String senha = "12345";
-        usuario.setSenha(senha);
+//        MessageDigest md = MessageDigest.getInstance("MD5");
+//        BigInteger hash = new BigInteger(1, md.digest(senha.getBytes()));
+        usuario.setSenha(md5(senha));
         if (usuario.getId() == null) {
             usuario.setEnable(true);
         }
