@@ -43,7 +43,9 @@ public class ProfessorControle implements Serializable {
     private DataModel<Professor> modelProfs;
     private List<String> disciplinas;
     private Endereco endereco;
-
+    
+    
+    
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
             session = HibernateUtil.abreSessao();
