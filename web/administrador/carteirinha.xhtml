@@ -58,7 +58,7 @@
                         <h:outputText value="#{carteirinha.num}" />
                     </p:column>
                     <p:column headerText="Valida até: ">
-                        <h:outputText value="#{carteirinha.validade} / #{carteirinha.validade}" />
+                        <h:outputText value="#{carteirinha.validade.month} / #{carteirinha.validade.year + 1}" />
                     </p:column>
 
                     <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >

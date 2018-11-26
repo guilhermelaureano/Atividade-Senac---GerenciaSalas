@@ -58,7 +58,7 @@
                         <p:commandButton icon="ui-icon-pencil" title="Alterar"
 
                                          process="@this" update="@form" actionListener="#{cursoC.alterarCurso()}">
-                            <f:setPropertyActionListener target="#{cursoC.nome}" value="#{curso}"/>          
+                            <f:setPropertyActionListener target="#{cursoC.curs.nome}" value="#{curso}"/>          
 
                         </p:commandButton>
 
@@ -66,7 +66,7 @@
                                          update="dadosCurso" title="Excluir">
                             <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
                                        icon="ui-icon-alert" />
-                            <f:setPropertyActionListener target="#{cursoC.nome}" value="#{curso}"   />
+                            <f:setPropertyActionListener target="#{cursoC.curs.nome}" value="#{curso}"   />
                         </p:commandButton>
                     </p:column>
 
