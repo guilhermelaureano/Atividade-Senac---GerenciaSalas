@@ -1,5 +1,4 @@
 package br.com.container.modelo;
-
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
