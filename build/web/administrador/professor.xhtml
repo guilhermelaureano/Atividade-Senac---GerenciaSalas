@@ -10,7 +10,6 @@
     <ui:define name="conteudo">
         <h1 class="jr-titulo1">Professor</h1>
 
-
         <h:form id="form_pesquisa">
 
             <p:toolbar id="toolbar_pesquisa" styleClass="toolbar" rendered="#{!profC.mostraToolbar}"  >
@@ -55,115 +54,111 @@
                     <p:spacer />
                 </p:panelGrid>
 
-                <h:form>
-                    <p:dataTable id="dadosProf" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true" 
-                                 rendered="#{!profC.mudaDados}" style="margin-top: 20px;"  
-                                 emptyMessage="Nenhum professor encontrado" rows="10" paginatorPosition="bottom"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
-                                 currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
-                                 rowsPerPageTemplate="5,10,15">
+                <p:dataTable id="dadosProf" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true" 
+                             rendered="#{!profC.mudaDados}" style="margin-top: 20px;"  
+                             emptyMessage="Nenhum professor encontrado" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                             currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
+                             rowsPerPageTemplate="5,10,15">
 
-                        <f:facet name="{Exporters}">
-                            <div style="float:right;padding: 1px;">
-                                <h:commandLink>
-                                    <p:graphicImage library="imagem" name="pdf.png" width="23"/>
-                                    <p:dataExporter type="pdf" target="dadosProf" fileName="modelProfs"/>
-                                </h:commandLink>
-                            </div>
+                    <f:facet name="{Exporters}">
+                        <div style="float:right;padding: 1px;">
+                            <h:commandLink>
+                                <p:graphicImage library="imagem" name="pdf.png" width="23"/>
+                                <p:dataExporter type="pdf" target="dadosProf" fileName="modelProfs"/>
+                            </h:commandLink>
+                        </div>
+                    </f:facet>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nome" />
                         </f:facet>
-
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Nome" />
-                            </f:facet>
-                            <h:outputText value="#{prof.nome}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Email" />
-                            </f:facet>
-                            <h:outputText value="#{prof.email}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Celular" />
-                            </f:facet>
-                            <h:outputText value="#{prof.foneMovel}" />
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Disciplina" />
-                            </f:facet>
-                            <h:outputText value="#{prof.disciplinas}" />
-                        </p:column>
-
-                        <p:column headerText="Whatsapp">
-                            <p:selectBooleanButton value="#{prof.whatsapp}" disabled="true" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
-                        </p:column>
-                        <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
-                            <p:commandButton icon="ui-icon-pencil" title="Alterar"
-                                             process="@this" update="@form" actionListener="#{profC.alterarProf()}">
-                                <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"/>          
-                            </p:commandButton>
-
-                            <p:commandButton icon="ui-icon-trash" actionListener="#{profC.excluir()}"
-                                             update="dadosProf" title="Excluir">
-                                <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
-                                           icon="ui-icon-alert" />
-                                <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"   />
-                            </p:commandButton>
-                        </p:column>
-
-                    </p:dataTable>
-                </h:form>
-                <h:form>
-                    <p:dataTable id="dadosProfLocal" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true" rendered="#{profC.mudaDados}"
-                                 style="margin-top: 20px;"  emptyMessage="Nenhum professor encontrado" rows="10" paginatorPosition="bottom"
-                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
-                                 currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
-                                 rowsPerPageTemplate="5,10,15">>
-
-                        <f:facet name="{Exporters}">
-                            <div style="float:right;padding: 2.5px;">
-                                <h:commandLink>
-                                    <p:graphicImage library="imagem" name="pdf.png" width="20"/>
-                                    <p:dataExporter type="pdf" target="dadosProfLocal" fileName="Professores"/>
-                                </h:commandLink>
-                            </div>
+                        <h:outputText value="#{prof.nome}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Email" />
                         </f:facet>
+                        <h:outputText value="#{prof.email}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Celular" />
+                        </f:facet>
+                        <h:outputText value="#{prof.foneMovel}" />
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Disciplina" />
+                        </f:facet>
+                        <h:outputText value="#{prof.disciplinas}" />
+                    </p:column>
 
-                        <p:column headerText="Nome">
-                            <h:outputText value="#{prof.nome}" />
-                        </p:column>
+                    <p:column headerText="Whatsapp">
+                        <p:selectBooleanButton value="#{prof.whatsapp}" disabled="true" onLabel="Sim" offLabel="Não" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                    </p:column>
+                    <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
+                        <p:commandButton icon="ui-icon-pencil" title="Alterar"
+                                         process="@this" update="@form" actionListener="#{profC.alterarProf()}">
+                            <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"/>          
+                        </p:commandButton>
 
-                        <p:column headerText="Fone">
-                            <h:outputText value="#{prof.foneMovel}" />
-                        </p:column>
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{profC.excluir()}"
+                                         update="dadosProf" title="Excluir">
+                            <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
+                                       icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"   />
+                        </p:commandButton>
+                    </p:column>
 
-                        <p:column headerText="Bairro" >
-                            <h:outputText value="#{prof.endereco.bairro}" />
-                        </p:column>
+                </p:dataTable>
+                <p:dataTable id="dadosProfLocal" value="#{profC.modelProfs}" var="prof" reflow="true" paginator="true" rendered="#{profC.mudaDados}"
+                             style="margin-top: 20px;"  emptyMessage="Nenhum professor encontrado" rows="10" paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                             currentPageReportTemplate="[ {currentPage} de {totalPages}  ]"
+                             rowsPerPageTemplate="5,10,15">>
 
-                        <p:column headerText="Cidade" >
-                            <h:outputText value="#{prof.endereco.cidade}" />
-                        </p:column>
+                    <f:facet name="{Exporters}">
+                        <div style="float:right;padding: 2.5px;">
+                            <h:commandLink>
+                                <p:graphicImage library="imagem" name="pdf.png" width="20"/>
+                                <p:dataExporter type="pdf" target="dadosProfLocal" fileName="Professores"/>
+                            </h:commandLink>
+                        </div>
+                    </f:facet>
 
-                        <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
-                            <p:commandButton icon="ui-icon-pencil" title="Alterar"
-                                             process="@this" update="@form" actionListener="#{profC.alterarProf()}">
-                                <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"/>          
-                            </p:commandButton>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{prof.nome}" />
+                    </p:column>
 
-                            <p:commandButton icon="ui-icon-trash" actionListener="#{profC.excluir()}"
-                                             update="dadosProf" title="Excluir">
-                                <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
-                                           icon="ui-icon-alert" />
-                                <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"   />
-                            </p:commandButton>
-                        </p:column>
+                    <p:column headerText="Fone">
+                        <h:outputText value="#{prof.foneMovel}" />
+                    </p:column>
 
-                    </p:dataTable>
-                </h:form>
+                    <p:column headerText="Bairro" >
+                        <h:outputText value="#{prof.endereco.bairro}" />
+                    </p:column>
+
+                    <p:column headerText="Cidade" >
+                        <h:outputText value="#{prof.endereco.cidade}" />
+                    </p:column>
+
+                    <p:column headerText="Alterar" class="centralizado tabela_botao_usuario"  >
+                        <p:commandButton icon="ui-icon-pencil" title="Alterar"
+                                         process="@this" update="@form" actionListener="#{profC.alterarProf()}">
+                            <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"/>          
+                        </p:commandButton>
+
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{profC.excluir()}"
+                                         update="dadosProfLocal" title="Excluir">
+                            <p:confirm header="Confirmação" message="Tem certeza exclusão?" 
+                                       icon="ui-icon-alert" />
+                            <f:setPropertyActionListener target="#{profC.prof}" value="#{prof}"   />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
             </h:panelGroup> 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" 

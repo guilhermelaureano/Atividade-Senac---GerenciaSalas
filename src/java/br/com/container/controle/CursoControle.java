@@ -16,6 +16,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
@@ -78,7 +79,7 @@ public class CursoControle implements Serializable {
             dao.salvarOuAlterar(curs, session);
             Mensagem.salvar("Atividade " + curs.getNome());
             curs = null;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             Mensagem.mensagemError("Erro ao salvar\nTente novamente");
             System.err.println("Erro ao salvar curso:\n" + e.getMessage());
         } finally {

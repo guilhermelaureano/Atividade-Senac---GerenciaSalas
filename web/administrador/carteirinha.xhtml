@@ -10,7 +10,6 @@
     <ui:define name="conteudo">
         <h1 class="jr-titulo1">Carteirinha</h1>
 
-
         <h:form id="form_pesquisa">
             <p:messages id="mens"  autoUpdate="true" />
 
@@ -25,7 +24,6 @@
                 </p:toolbar>
 
                 <p:panelGrid id="panelGridPesq" columns="2" layout="grid" columnClasses="ui-grid-col-1, ui-grid-col-8" styleClass="painel_grid_noborder" >
-
                     <p:outputLabel for="pesqNome" value="Nome do aluno:"/>
                     <p:inputText id="pesqNome" value="#{carteirinhaC.aluno.nome}" style="margin-left: 5px"/>
                     <p:outputLabel for ="pesqNum" value="Numero do aluno:"/>
@@ -96,12 +94,11 @@
                     <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-4" 
                                  styleClass="painel_grid_noborder" >
                         
-                        <p:outputLabel for="nome" value="Nome do Aluno:" />
+                        <p:outputLabel for="nome" value="Nome do Aluno:"/>
                         <p:autoComplete id="nome" value="#{carteirinhaC.aluno.id}" minQueryLength="3" 
                                         completeMethod="#{carteirinhaC.pesquisarAluno}"
                                         var="aluno" itemLabel="#{aluno.nome}" itemValue="#{aluno.id}" />
-                        
-                        <p:outputLabel for="curso" value="Curso: " />
+                        <p:outputLabel for="curso" value="Curso:"/>
                         <p:autoComplete id="curso" value="#{carteirinhaC.curso.id}"
                                         completeMethod="#{carteirinhaC.pesquisarCurso}"
                                         var="curso" itemLabel="#{curso.nome}" itemValue="#{curso.id}" />

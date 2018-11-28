@@ -105,7 +105,8 @@ public class EquipamentoControle implements Serializable {
         dao = new EquipamentoDaoImpl();
         try {
             abreSessao();
-            dao.remover(equip, session);
+            dao.remover(equip, session); 
+            modelEquips = null;
             Mensagem.excluir("Equipamento " + equip.getNome());
             equip = new Equipamento();
         } catch (HibernateException ex) {

@@ -34,9 +34,18 @@ public class CarteirinhaDaoImpl extends BaseDaoImpl<Carteirinha, Long> implement
         return consulta.list();
     }
     
+    @Override
     public List<Carteirinha> pesquisaPorNumero(String numero, Session session) throws HibernateException{
         Query consulta = session.createQuery("from Carteirinha c where c.numero like :numero");
         consulta.setParameter("numero", "%"+numero+"%");
+        return consulta.list();
+    }
+
+    @Override
+    public List<Carteirinha> pesquisaPorNomeNumero(String nome, String numero, Session session) throws HibernateException {
+        Query consulta = session.createQuery("from Carteirinha c where c.nome like :nome and c.numero like :numero");
+        consulta.setParameter("nome", "%" + nome + "%");
+        consulta.setParameter("numero", "%" + numero + "%");
         return consulta.list();
     }
     

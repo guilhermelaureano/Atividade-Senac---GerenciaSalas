@@ -17,10 +17,9 @@ import br.com.container.modelo.Carteirinha;
 import br.com.container.modelo.Curso;
 import br.com.container.modelo.Endereco;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javafx.geometry.VPos;
-import javafx.scene.layout.GridPane;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.DataModel;
@@ -45,14 +44,25 @@ public class CarteirinhaControle implements Serializable {
     private Endereco endereco;
     private Aluno aluno;
     private Curso curso;
+    private String pesqNome = "";
+    private String pesqNumero = "";
+    
 
     private void abreSessao() {
         if (session == null || !session.isOpen()) {
             session = HibernateUtil.abreSessao();
         }
     }
+    
+    private void limpar(){
+        carteirinha = new Carteirinha();
+        carteirinhas = new ArrayList();
+    }
 
     public void mudaToolbar() {
+        limpar();
+        pesqNome = "";
+        pesqNumero = "";
         mostraToolbar = !mostraToolbar;
     }
 
@@ -60,13 +70,18 @@ public class CarteirinhaControle implements Serializable {
         dao = new CarteirinhaDaoImpl();
         try {
             abreSessao();
-            if (!carteirinha.getNum().equals("")) {
-                carteirinhas = dao.pesquisaPorNumero(carteirinha.getNum(), session);
+            if (!pesqNome.equals("") && !pesqNumero.equals("")) {
+                carteirinhas = dao.pesquisaPorNomeNumero(pesqNome, pesqNumero, session);
+            } else if (!pesqNome.equals("")){
+                carteirinhas = dao.pesquisaPorNome(pesqNome, session);
+            } else if (!pesqNumero.equals("")){
+                carteirinhas = dao.pesquisaPorNumero(pesqNumero, session);
             } else {
                 carteirinhas = dao.listaTodos(session);
             }
             modelCarteirinhas = new ListDataModel(carteirinhas);
-            carteirinha.setNum(null);
+            pesqNome = null;
+            pesqNumero = null;
         } catch (HibernateException ex) {
             System.err.println("Erro ao pesquisar carteirinha:\n" + ex.getMessage());
         } finally {
@@ -99,7 +114,7 @@ public class CarteirinhaControle implements Serializable {
         AlunoDao alunoDao = new AlunoDaoImpl();
         try {
             aluno = alunoDao.pesquisaEntidadeId(aluno.getId(), session);
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             System.out.println("Erro ao carregar aluno " + e.getMessage());
         }
     }
@@ -108,7 +123,9 @@ public class CarteirinhaControle implements Serializable {
         mostraToolbar = !mostraToolbar;
         carteirinha = modelCarteirinhas.getRowData();
         aluno = carteirinha.getAluno();
+        aluno.getNome();
         curso = carteirinha.getCurso();
+        curso.getNome();
     }
 
     public void excluir() {
@@ -117,6 +134,7 @@ public class CarteirinhaControle implements Serializable {
         try {
             abreSessao();
             dao.remover(carteirinha, session);
+            modelCarteirinhas = null;
             Mensagem.excluir("Carteirinha " + carteirinha.getNum());
             carteirinha = new Carteirinha();
         } catch (HibernateException ex) {

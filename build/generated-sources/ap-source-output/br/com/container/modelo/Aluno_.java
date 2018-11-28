@@ -9,7 +9,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Aluno_ extends br.com.container.modelo.Pessoa_ {
 
 	public static volatile SingularAttribute<Aluno, String> CPF;
-	public static volatile SingularAttribute<Aluno, Long> id;
 
 }
 

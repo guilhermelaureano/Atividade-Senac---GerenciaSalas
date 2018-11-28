@@ -16,6 +16,10 @@ import org.hibernate.Session;
  */
 public interface CarteirinhaDao extends BaseDao<Carteirinha, Long> {
 
+    public List<Carteirinha> pesquisaPorNome(String nome, Session session) throws HibernateException;
+    
     public List<Carteirinha> pesquisaPorNumero(String numero, Session session) throws HibernateException;
+    
+    public List<Carteirinha> pesquisaPorNomeNumero(String nome, String numero, Session session) throws HibernateException;
 
 }
